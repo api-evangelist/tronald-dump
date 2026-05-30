@@ -1,0 +1,231 @@
+vocabulary: 1.0.0
+
+info:
+  provider: Tronald Dump
+  description: >-
+    Unified vocabulary for the Tronald Dump Quotes API mapping the
+    operational dimension (OpenAPI operations, resources, schemas, and tags
+    for the HAL JSON quote corpus) onto the capability dimension (Naftiko
+    workflow capabilities that expose the quote, tag, author, and source
+    surfaces as REST + MCP tools for political-research, civic-tech, and
+    quote-bot personas).
+  created: '2026-05-30'
+  modified: '2026-05-30'
+
+operational:
+  apis:
+  - name: Tronald Dump Quotes API
+    namespace: tronald-dump
+    version: 1.0.0
+    baseUrl: https://api.tronalddump.io
+    status: offline
+
+  resources:
+  - name: Quote
+    api: tronald-dump
+    actions: [get-random, get-by-id, search]
+    description: Donald Trump quotes with HAL hypermedia metadata.
+  - name: Tag
+    api: tronald-dump
+    actions: [list, get-quotes-by-tag]
+    description: Controlled vocabulary tags attached to quotes.
+  - name: Author
+    api: tronald-dump
+    actions: [list, get-by-id]
+    description: Author records (Donald Trump et al.) attached to quotes.
+  - name: Source
+    api: tronald-dump
+    actions: [list, get-by-id]
+    description: Source documents (tweets, transcripts, articles) underpinning each quote.
+
+  actions:
+  - verb: get
+    httpMethods: [GET]
+    pattern: read
+    description: Retrieve a single entity by identifier or random selection.
+  - verb: list
+    httpMethods: [GET]
+    pattern: read
+    description: List the entities in a collection (optionally paginated).
+  - verb: search
+    httpMethods: [GET]
+    pattern: query
+    description: Full text search across the quote corpus.
+
+  schemas:
+    core:
+    - name: Quote
+      description: Single Donald Trump quote with HAL links and embedded author/source.
+      keyProperties: [quote_id, value, tags, appeared_at, created_at, updated_at]
+    - name: Author
+      description: Author entity referenced by quotes.
+      keyProperties: [author_id, name, slug, bio]
+    - name: Source
+      description: Source document (tweet, transcript, article) for a quote.
+      keyProperties: [source_id, url, filename, created_at, updated_at]
+    - name: Tag
+      description: Single tag value in the controlled vocabulary.
+      keyProperties: [value]
+    envelopes:
+    - name: QuoteSearchResponse
+      description: HAL paginated envelope for quote search and tag-filtered results.
+      keyProperties: [count, total, _embedded.quotes, _links]
+    - name: TagListResponse
+      description: HAL envelope for the tag vocabulary listing.
+      keyProperties: [count, total, _embedded.tags, _links]
+    - name: AuthorListResponse
+      description: HAL envelope for the author listing.
+      keyProperties: [count, total, _embedded.authors, _links]
+    - name: SourceListResponse
+      description: HAL envelope for the source listing.
+      keyProperties: [count, total, _embedded.sources, _links]
+
+  parameters:
+    identifiers:
+    - name: quote_id
+      in: path
+      description: Unique URL-safe identifier for a quote.
+    - name: tag_value
+      in: path
+      description: Exact tag value used as a filter.
+    - name: author_id
+      in: path
+      description: Unique URL-safe identifier for an author.
+    - name: source_id
+      in: path
+      description: Unique URL-safe identifier for a source.
+    filters:
+    - name: query
+      in: query
+      description: Free text search query string.
+    pagination:
+    - name: page
+      in: query
+      default: 0
+      description: Zero-indexed page number.
+    - name: size
+      in: query
+      default: 25
+      description: Number of results per page.
+
+  enums:
+    tagExamples: [Wall, Mexico, China, NATO, Fake News, Russia, Hillary, Obama]
+
+  authentication:
+    type: none
+    note: >-
+      Tronald Dump is a public no-auth API. No API key, OAuth token, or
+      bearer authentication is required.
+
+  contentTypes:
+    request: [application/json]
+    response: [application/hal+json, application/json]
+
+  conventions:
+    pathCasing: kebab-case (singular nouns: /quote, /tag, /author, /source)
+    propertyCasing: snake_case (quote_id, author_id, created_at)
+    operationIdCasing: camelCase (getRandomQuote, searchQuotes, getQuotesByTag)
+    tagCasing: Title Case (Quotes, Tags, Authors, Sources)
+    hypermediaStyle: HAL (_links, _embedded)
+    pagination: page + size query parameters
+    idStyle: URL-safe base64 (e.g. GYDdK40iSrSiyVAm2J_TKQ)
+
+capability:
+  workflows:
+  - name: Tronald Dump — Quotes
+    file: capabilities/quotes-quotes.yaml
+    description: Random quote, quote lookup, and full text search.
+    apis: [tronald-dump]
+    toolCount: 3
+    personas: [quote-bot-builder, political-researcher]
+    domains: [Quotes]
+  - name: Tronald Dump — Tags
+    file: capabilities/quotes-tags.yaml
+    description: Tag vocabulary browsing and tag-filtered quote retrieval.
+    apis: [tronald-dump]
+    toolCount: 2
+    personas: [quote-bot-builder, political-researcher]
+    domains: [Tags]
+  - name: Tronald Dump — Authors
+    file: capabilities/quotes-authors.yaml
+    description: Author listing and lookup by identifier.
+    apis: [tronald-dump]
+    toolCount: 2
+    personas: [political-researcher, civic-tech-developer]
+    domains: [Authors]
+  - name: Tronald Dump — Sources
+    file: capabilities/quotes-sources.yaml
+    description: Source document listing and lookup by identifier.
+    apis: [tronald-dump]
+    toolCount: 2
+    personas: [political-researcher, civic-tech-developer]
+    domains: [Sources]
+
+  personas:
+  - id: quote-bot-builder
+    name: Quote Bot Builder
+    description: Developers building Twitter/Mastodon bots, voice skills, or chat integrations that surface random and search-driven Trump quotes.
+    workflows: [quotes-quotes, quotes-tags]
+  - id: political-researcher
+    name: Political Researcher
+    description: Academics, journalists, and policy researchers analyzing political rhetoric and primary sources.
+    workflows: [quotes-quotes, quotes-tags, quotes-authors, quotes-sources]
+  - id: civic-tech-developer
+    name: Civic Tech Developer
+    description: Open source contributors building civic-tech apps, fact-checking tools, and political-archive interfaces.
+    workflows: [quotes-authors, quotes-sources]
+
+  domains:
+  - name: Quotes
+    description: The primary content surface — the quotes themselves and the search/random retrieval that drives most integrations.
+  - name: Tags
+    description: The controlled vocabulary that organizes the quote corpus by topic.
+  - name: Authors
+    description: The author entity (predominantly Donald Trump) attached to quotes.
+  - name: Sources
+    description: The provenance surface — tweets, transcripts, and articles each quote was drawn from.
+
+  namespaces:
+  - consumed: quotes-quotes
+    rest: quotes-quotes-rest
+    mcp: quotes-quotes-mcp
+    restPort: 8080
+    mcpPort: 9090
+  - consumed: quotes-tags
+    rest: quotes-tags-rest
+    mcp: quotes-tags-mcp
+    restPort: 8080
+    mcpPort: 9090
+  - consumed: quotes-authors
+    rest: quotes-authors-rest
+    mcp: quotes-authors-mcp
+    restPort: 8080
+    mcpPort: 9090
+  - consumed: quotes-sources
+    rest: quotes-sources-rest
+    mcp: quotes-sources-mcp
+    restPort: 8080
+    mcpPort: 9090
+
+  binds:
+  - envVar: TRONALD_DUMP_BASE_URI
+    workflows: [quotes-quotes, quotes-tags, quotes-authors, quotes-sources]
+    description: Optional override of the upstream base URI (useful for pointing at a mirror or local Microcks mock since the original service is offline).
+
+crossReference:
+- resource: Quote
+  operations: [getRandomQuote, getQuoteById, searchQuotes]
+  workflows: [quotes-quotes]
+  personas: [quote-bot-builder, political-researcher]
+- resource: Tag
+  operations: [getAllTags, getQuotesByTag]
+  workflows: [quotes-tags]
+  personas: [quote-bot-builder, political-researcher]
+- resource: Author
+  operations: [getAllAuthors, getAuthorById]
+  workflows: [quotes-authors]
+  personas: [political-researcher, civic-tech-developer]
+- resource: Source
+  operations: [getAllSources, getSourceById]
+  workflows: [quotes-sources]
+  personas: [political-researcher, civic-tech-developer]

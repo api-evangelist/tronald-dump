@@ -1,32 +1,128 @@
 aid: tronald-dump
 name: Tronald Dump
-description: "The dumbest things Donald Trump has ever said"
-url: https://www.tronalddump.io/
-specificationVersion: '0.20'
+description: >-
+  Tronald Dump is an open community REST API exposing a historical archive of
+  Donald Trump quotes, with sources, authors, tags, and a search interface
+  using HAL (Hypertext Application Language) JSON responses. The project was
+  built by Marcel Wijnker (wickedest) and ran at tronalddump.io until the
+  domain lapsed and the public service went offline; the data model, OpenAPI,
+  and community SDKs survive in third-party repositories.
+image: https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/main/apis.yml
 created: '2026-05-28'
-modified: '2026-05-28'
+modified: '2026-05-30'
+specificationVersion: '0.20'
 x-source: public-apis/public-apis
-x-category: "Games & Comics"
+x-category: Games & Comics
+x-type: opensource
 x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
+x-status: offline
+x-status-note: >-
+  Original service at tronalddump.io and api.tronalddump.io is no longer
+  resolvable (NXDOMAIN as of 2026-05-30). The www.tronalddump.io domain has
+  been re-registered and now serves unrelated content. The OpenAPI surface
+  documented here is reconstructed from the original HAL API contract and
+  preserved community SDKs.
 tags:
-  - Games And Comics
-  - Public APIs
+- Community
+- Games And Comics
+- Open Source
+- Politics
+- Public APIs
+- Quotes
+- Trump
 apis:
-  - name: Tronald Dump
-    description: "The dumbest things Donald Trump has ever said"
-    humanURL: https://www.tronalddump.io/
-    baseURL: https://www.tronalddump.io/
-    tags:
-      - Games And Comics
-    properties:
-      - type: Documentation
-        url: https://www.tronalddump.io/
-common:
-  - type: Website
+- aid: tronald-dump:quotes-api
+  name: Tronald Dump Quotes API
+  description: >-
+    REST API returning Donald Trump quotes with metadata, tags, authors, and
+    sources, using HAL JSON responses with _links and _embedded sections for
+    hypermedia navigation. Includes random quote retrieval, quote-by-id
+    lookup, full text search with pagination, tag browsing, author lookup,
+    and source lookup.
+  humanURL: https://www.tronalddump.io/
+  baseURL: https://api.tronalddump.io
+  tags:
+  - Authors
+  - HAL
+  - Hypermedia
+  - Quotes
+  - Search
+  - Sources
+  - Tags
+  properties:
+  - type: Documentation
     url: https://www.tronalddump.io/
-  - type: PublicAPIsListing
-    url: https://github.com/public-apis/public-apis
+  - type: OpenAPI
+    url: openapi/tronald-dump-quotes-openapi.yml
+  - type: NaftikoCapability
+    url: capabilities/quotes-quotes.yaml
+  - type: NaftikoCapability
+    url: capabilities/quotes-tags.yaml
+  - type: NaftikoCapability
+    url: capabilities/quotes-authors.yaml
+  - type: NaftikoCapability
+    url: capabilities/quotes-sources.yaml
+  contact:
+  - FN: Marcel Wijnker
+    url: https://github.com/wickedest
+common:
+- type: Website
+  url: https://www.tronalddump.io/
+- type: PublicAPIsListing
+  url: https://github.com/public-apis/public-apis
+- type: SourceCode
+  title: Original Author (Marcel Wijnker)
+  url: https://github.com/wickedest
+- type: SourceCode
+  title: Original Node.js Client (tronalddump-io/client-nodejs)
+  url: https://github.com/tronalddump-io/client-nodejs
+- type: SDK
+  title: TypeScript SDK (voxgig)
+  url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/ts
+- type: SDK
+  title: Python SDK (voxgig)
+  url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/py
+- type: SDK
+  title: Go SDK (voxgig)
+  url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/go
+- type: SDK
+  title: Ruby SDK (voxgig)
+  url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/rb
+- type: SDK
+  title: PHP SDK (voxgig)
+  url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/php
+- type: SDK
+  title: Lua SDK (voxgig)
+  url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/lua
+- type: CLI
+  title: Go CLI (voxgig)
+  url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/go-cli
+- type: Tools
+  title: MCP Server (voxgig, Go)
+  url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/go-mcp
+- type: CodeExamples
+  title: Flutter Sample (RicardoBelchior)
+  url: https://github.com/RicardoBelchior/TronaldDump
+- type: CodeExamples
+  title: Android Sample (br00)
+  url: https://github.com/br00/TronaldDump
+- type: CodeExamples
+  title: SwiftUI Sample (simonschuhmacher)
+  url: https://github.com/simonschuhmacher/tronald-swiftui
+- type: CodeExamples
+  title: Mycroft Skill (krisgesling)
+  url: https://github.com/krisgesling/tronald-dump-skill
+- type: CodeExamples
+  title: Alexa Skill (Tonkpils)
+  url: https://github.com/Tonkpils/tronalddump-alexa
+- type: SpectralRuleset
+  url: rules/tronald-dump-spectral-rules.yml
+- type: Vocabulary
+  url: vocabulary/tronald-dump-vocabulary.yaml
+- type: JSONLDContext
+  url: json-ld/tronald-dump-context.jsonld
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,166 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Tronald Dump Quotes API — Quotes
+  description: >-
+    Quotes — Quotes. 3 operations. Lead operation: Tronald Dump Get Random
+    Quote. Self-contained Naftiko capability covering one Tronald Dump
+    business surface.
+  tags:
+  - Tronald Dump
+  - Quotes
+  - HAL
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+- namespace: env
+  keys:
+    TRONALD_DUMP_BASE_URI: TRONALD_DUMP_BASE_URI
+capability:
+  consumes:
+  - type: http
+    namespace: quotes-quotes
+    baseUri: https://api.tronalddump.io
+    description: Tronald Dump Quotes API — Quotes business capability. Self-contained, no shared references.
+    resources:
+    - name: random-quote
+      path: /random/quote
+      operations:
+      - name: getRandomQuote
+        method: GET
+        description: Tronald Dump Get Random Quote
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: quote-by-id
+      path: /quote/{quote_id}
+      operations:
+      - name: getQuoteById
+        method: GET
+        description: Tronald Dump Get Quote by ID
+        inputParameters:
+        - name: quote_id
+          in: path
+          type: string
+          required: true
+          description: The unique identifier of the quote.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: search-quote
+      path: /search/quote
+      operations:
+      - name: searchQuotes
+        method: GET
+        description: Tronald Dump Search Quotes
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          required: true
+          description: Free text query string to search quote values against.
+        - name: page
+          in: query
+          type: integer
+          required: false
+          description: Zero-indexed page number for pagination.
+        - name: size
+          in: query
+          type: integer
+          required: false
+          description: Number of results returned per page.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: quotes-quotes-rest
+    port: 8080
+    description: REST adapter for Tronald Dump Quotes API — Quotes. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/random-quote
+      name: random-quote
+      description: REST surface for random-quote.
+      operations:
+      - method: GET
+        name: getRandomQuote
+        description: Tronald Dump Get Random Quote
+        call: quotes-quotes.getRandomQuote
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/quotes/{quote-id}
+      name: quote-by-id
+      description: REST surface for quote-by-id.
+      operations:
+      - method: GET
+        name: getQuoteById
+        description: Tronald Dump Get Quote by ID
+        call: quotes-quotes.getQuoteById
+        with:
+          quote_id: rest.quote_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/quotes/search
+      name: search-quote
+      description: REST surface for quote search.
+      operations:
+      - method: GET
+        name: searchQuotes
+        description: Tronald Dump Search Quotes
+        call: quotes-quotes.searchQuotes
+        with:
+          query: rest.query
+          page: rest.page
+          size: rest.size
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quotes-quotes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Tronald Dump Quotes API — Quotes. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: get-random-quote
+      description: Tronald Dump Get Random Quote
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quotes-quotes.getRandomQuote
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-quote-by-id
+      description: Tronald Dump Get Quote by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quotes-quotes.getQuoteById
+      with:
+        quote_id: tools.quote_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-quotes
+      description: Tronald Dump Search Quotes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quotes-quotes.searchQuotes
+      with:
+        query: tools.query
+        page: tools.page
+        size: tools.size
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,890 @@
+openapi: 3.0.3
+info:
+  title: Tronald Dump Quotes API
+  description: >-
+    Tronald Dump is an open community REST API exposing a historical archive
+    of Donald Trump quotes with sources, authors, tags, and a search
+    interface. Responses follow HAL (Hypertext Application Language) JSON
+    conventions with `_links` and `_embedded` sections for hypermedia
+    navigation. The API supports random quote retrieval, quote lookup by ID,
+    full text search with pagination, tag browsing, author lookup, and source
+    lookup. No authentication is required. The original public service ran
+    at api.tronalddump.io and has gone offline since 2023; this spec is
+    preserved for community SDKs, archival mirrors, and historical
+    reconstruction.
+  version: 1.0.0
+  contact:
+    name: Marcel Wijnker (Original Author)
+    url: https://github.com/wickedest
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  x-generated-from: documentation
+  x-last-validated: '2026-05-30'
+  x-api-status: offline-historical
+servers:
+- url: https://api.tronalddump.io
+  description: Tronald Dump Production (historical, offline since 2023)
+tags:
+- name: Quotes
+  description: Retrieve Donald Trump quotes individually, randomly, or via full text search.
+- name: Tags
+  description: Browse the controlled vocabulary of tags attached to quotes.
+- name: Authors
+  description: Look up the author records attached to quotes.
+- name: Sources
+  description: Look up the source documents (tweets, transcripts, articles) attached to quotes.
+paths:
+  /random/quote:
+    get:
+      operationId: getRandomQuote
+      summary: Tronald Dump Get Random Quote
+      description: >-
+        Returns a single random Donald Trump quote with HAL `_links` and
+        `_embedded` author/source records.
+      tags:
+      - Quotes
+      responses:
+        '200':
+          description: A random quote was returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+              examples:
+                GetRandomQuote200Example:
+                  summary: Default getRandomQuote 200 response
+                  x-microcks-default: true
+                  value:
+                    appeared_at: '2016-09-26T00:00:00.000Z'
+                    created_at: '2017-02-15T16:13:32.456Z'
+                    quote_id: GYDdK40iSrSiyVAm2J_TKQ
+                    tags:
+                    - Mexico
+                    - Wall
+                    updated_at: '2017-02-15T16:13:32.456Z'
+                    value: >-
+                      When Mexico sends its people, they're not sending their best.
+                    _links:
+                      self:
+                        href: /quote/GYDdK40iSrSiyVAm2J_TKQ
+                    _embedded:
+                      author:
+                      - author_id: 86xX9JdJSlqIo86xJoiqAA
+                        name: Donald Trump
+                        slug: donald-trump
+                        bio: 45th and 47th President of the United States.
+                      source:
+                      - source_id: 2u3o8DcvSluqZ27WtmlGCw
+                        url: https://twitter.com/realDonaldTrump/status/780494805192454144
+                        filename: '780494805192454144.txt'
+                        created_at: '2017-02-15T16:13:32.456Z'
+                        updated_at: '2017-02-15T16:13:32.456Z'
+        '404':
+          description: No quote available.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetRandomQuote404Example:
+                  summary: Default getRandomQuote 404 response
+                  x-microcks-default: true
+                  value:
+                    status: 404
+                    message: No quote found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetRandomQuote500Example:
+                  summary: Default getRandomQuote 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /quote/{quote_id}:
+    get:
+      operationId: getQuoteById
+      summary: Tronald Dump Get Quote by ID
+      description: >-
+        Returns a specific Donald Trump quote by its unique identifier, with
+        HAL `_links` and `_embedded` author/source records.
+      tags:
+      - Quotes
+      parameters:
+      - name: quote_id
+        in: path
+        description: The unique identifier of the quote.
+        required: true
+        schema:
+          type: string
+        example: GYDdK40iSrSiyVAm2J_TKQ
+      responses:
+        '200':
+          description: The quote was found and returned.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+              examples:
+                GetQuoteById200Example:
+                  summary: Default getQuoteById 200 response
+                  x-microcks-default: true
+                  value:
+                    appeared_at: '2016-09-26T00:00:00.000Z'
+                    created_at: '2017-02-15T16:13:32.456Z'
+                    quote_id: GYDdK40iSrSiyVAm2J_TKQ
+                    tags:
+                    - Mexico
+                    - Wall
+                    updated_at: '2017-02-15T16:13:32.456Z'
+                    value: I will build a great wall.
+                    _links:
+                      self:
+                        href: /quote/GYDdK40iSrSiyVAm2J_TKQ
+        '404':
+          description: Quote not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetQuoteById404Example:
+                  summary: Default getQuoteById 404 response
+                  x-microcks-default: true
+                  value:
+                    status: 404
+                    message: Quote not found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetQuoteById500Example:
+                  summary: Default getQuoteById 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /search/quote:
+    get:
+      operationId: searchQuotes
+      summary: Tronald Dump Search Quotes
+      description: >-
+        Full text search across the corpus of Donald Trump quotes. Returns a
+        HAL response with `_embedded.quotes`, total/count metadata, and
+        pagination links.
+      tags:
+      - Quotes
+      parameters:
+      - name: query
+        in: query
+        description: Free text query string to search quote values against.
+        required: true
+        schema:
+          type: string
+        example: wall
+      - name: page
+        in: query
+        description: Zero-indexed page number for pagination.
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        description: Number of results returned per page.
+        required: false
+        schema:
+          type: integer
+          default: 25
+          minimum: 1
+          maximum: 100
+        example: 25
+      responses:
+        '200':
+          description: Search returned successfully (may contain zero matches).
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/QuoteSearchResponse'
+              examples:
+                SearchQuotes200Example:
+                  summary: Default searchQuotes 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 2
+                    total: 2
+                    _embedded:
+                      quotes:
+                      - appeared_at: '2016-09-26T00:00:00.000Z'
+                        created_at: '2017-02-15T16:13:32.456Z'
+                        quote_id: GYDdK40iSrSiyVAm2J_TKQ
+                        tags:
+                        - Mexico
+                        - Wall
+                        value: I will build a great wall.
+                        _links:
+                          self:
+                            href: /quote/GYDdK40iSrSiyVAm2J_TKQ
+                      - appeared_at: '2016-10-09T00:00:00.000Z'
+                        created_at: '2017-02-15T16:13:32.456Z'
+                        quote_id: 9aN8b3CMQpaLvSf7Z_ToWQ
+                        tags:
+                        - Wall
+                        value: The wall just got 10 feet taller.
+                        _links:
+                          self:
+                            href: /quote/9aN8b3CMQpaLvSf7Z_ToWQ
+                    _links:
+                      self:
+                        href: /search/quote?query=wall&page=0&size=25
+                      next:
+                        href: /search/quote?query=wall&page=1&size=25
+        '404':
+          description: No quotes matched the query.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                SearchQuotes404Example:
+                  summary: Default searchQuotes 404 response
+                  x-microcks-default: true
+                  value:
+                    status: 404
+                    message: No quotes found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                SearchQuotes500Example:
+                  summary: Default searchQuotes 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /tag:
+    get:
+      operationId: getAllTags
+      summary: Tronald Dump Get All Tags
+      description: >-
+        Returns the controlled vocabulary of all tags that exist across the
+        quote corpus.
+      tags:
+      - Tags
+      responses:
+        '200':
+          description: Tag list returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/TagListResponse'
+              examples:
+                GetAllTags200Example:
+                  summary: Default getAllTags 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 3
+                    total: 3
+                    _embedded:
+                      tags:
+                      - value: Wall
+                        _links:
+                          self:
+                            href: /tag/Wall
+                      - value: Mexico
+                        _links:
+                          self:
+                            href: /tag/Mexico
+                      - value: China
+                        _links:
+                          self:
+                            href: /tag/China
+                    _links:
+                      self:
+                        href: /tag
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetAllTags500Example:
+                  summary: Default getAllTags 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /tag/{tag_value}:
+    get:
+      operationId: getQuotesByTag
+      summary: Tronald Dump Get Quotes by Tag
+      description: >-
+        Returns the set of Donald Trump quotes associated with a specific tag
+        value, with HAL pagination metadata.
+      tags:
+      - Tags
+      parameters:
+      - name: tag_value
+        in: path
+        description: The exact tag value to filter quotes by.
+        required: true
+        schema:
+          type: string
+        example: Wall
+      - name: page
+        in: query
+        description: Zero-indexed page number for pagination.
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+        example: 0
+      - name: size
+        in: query
+        description: Number of results returned per page.
+        required: false
+        schema:
+          type: integer
+          default: 25
+          minimum: 1
+          maximum: 100
+        example: 25
+      responses:
+        '200':
+          description: Tag matched and quotes returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/QuoteSearchResponse'
+              examples:
+                GetQuotesByTag200Example:
+                  summary: Default getQuotesByTag 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 1
+                    total: 1
+                    _embedded:
+                      quotes:
+                      - appeared_at: '2016-09-26T00:00:00.000Z'
+                        created_at: '2017-02-15T16:13:32.456Z'
+                        quote_id: GYDdK40iSrSiyVAm2J_TKQ
+                        tags:
+                        - Wall
+                        value: I will build a great wall.
+                        _links:
+                          self:
+                            href: /quote/GYDdK40iSrSiyVAm2J_TKQ
+                    _links:
+                      self:
+                        href: /tag/Wall
+        '404':
+          description: Tag not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetQuotesByTag404Example:
+                  summary: Default getQuotesByTag 404 response
+                  x-microcks-default: true
+                  value:
+                    status: 404
+                    message: Tag not found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetQuotesByTag500Example:
+                  summary: Default getQuotesByTag 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /author:
+    get:
+      operationId: getAllAuthors
+      summary: Tronald Dump Get All Authors
+      description: Returns the list of all author records tracked in the corpus.
+      tags:
+      - Authors
+      responses:
+        '200':
+          description: Author list returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/AuthorListResponse'
+              examples:
+                GetAllAuthors200Example:
+                  summary: Default getAllAuthors 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 1
+                    total: 1
+                    _embedded:
+                      authors:
+                      - author_id: 86xX9JdJSlqIo86xJoiqAA
+                        name: Donald Trump
+                        slug: donald-trump
+                        bio: 45th and 47th President of the United States.
+                        _links:
+                          self:
+                            href: /author/86xX9JdJSlqIo86xJoiqAA
+                    _links:
+                      self:
+                        href: /author
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetAllAuthors500Example:
+                  summary: Default getAllAuthors 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /author/{author_id}:
+    get:
+      operationId: getAuthorById
+      summary: Tronald Dump Get Author by ID
+      description: Returns a specific author record by unique identifier.
+      tags:
+      - Authors
+      parameters:
+      - name: author_id
+        in: path
+        description: The unique identifier of the author.
+        required: true
+        schema:
+          type: string
+        example: 86xX9JdJSlqIo86xJoiqAA
+      responses:
+        '200':
+          description: Author returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Author'
+              examples:
+                GetAuthorById200Example:
+                  summary: Default getAuthorById 200 response
+                  x-microcks-default: true
+                  value:
+                    author_id: 86xX9JdJSlqIo86xJoiqAA
+                    name: Donald Trump
+                    slug: donald-trump
+                    bio: 45th and 47th President of the United States.
+                    _links:
+                      self:
+                        href: /author/86xX9JdJSlqIo86xJoiqAA
+        '404':
+          description: Author not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetAuthorById404Example:
+                  summary: Default getAuthorById 404 response
+                  x-microcks-default: true
+                  value:
+                    status: 404
+                    message: Author not found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetAuthorById500Example:
+                  summary: Default getAuthorById 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /source:
+    get:
+      operationId: getAllSources
+      summary: Tronald Dump Get All Sources
+      description: >-
+        Returns the list of all source documents (tweets, transcripts,
+        articles) attached to quotes in the corpus.
+      tags:
+      - Sources
+      responses:
+        '200':
+          description: Source list returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/SourceListResponse'
+              examples:
+                GetAllSources200Example:
+                  summary: Default getAllSources 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 1
+                    total: 1
+                    _embedded:
+                      sources:
+                      - source_id: 2u3o8DcvSluqZ27WtmlGCw
+                        url: https://twitter.com/realDonaldTrump/status/780494805192454144
+                        filename: '780494805192454144.txt'
+                        created_at: '2017-02-15T16:13:32.456Z'
+                        updated_at: '2017-02-15T16:13:32.456Z'
+                        _links:
+                          self:
+                            href: /source/2u3o8DcvSluqZ27WtmlGCw
+                    _links:
+                      self:
+                        href: /source
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetAllSources500Example:
+                  summary: Default getAllSources 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /source/{source_id}:
+    get:
+      operationId: getSourceById
+      summary: Tronald Dump Get Source by ID
+      description: Returns a specific source record by unique identifier.
+      tags:
+      - Sources
+      parameters:
+      - name: source_id
+        in: path
+        description: The unique identifier of the source.
+        required: true
+        schema:
+          type: string
+        example: 2u3o8DcvSluqZ27WtmlGCw
+      responses:
+        '200':
+          description: Source returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Source'
+              examples:
+                GetSourceById200Example:
+                  summary: Default getSourceById 200 response
+                  x-microcks-default: true
+                  value:
+                    source_id: 2u3o8DcvSluqZ27WtmlGCw
+                    url: https://twitter.com/realDonaldTrump/status/780494805192454144
+                    filename: '780494805192454144.txt'
+                    created_at: '2017-02-15T16:13:32.456Z'
+                    updated_at: '2017-02-15T16:13:32.456Z'
+                    _links:
+                      self:
+                        href: /source/2u3o8DcvSluqZ27WtmlGCw
+        '404':
+          description: Source not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetSourceById404Example:
+                  summary: Default getSourceById 404 response
+                  x-microcks-default: true
+                  value:
+                    status: 404
+                    message: Source not found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetSourceById500Example:
+                  summary: Default getSourceById 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Quote:
+      type: object
+      description: A single Donald Trump quote with HAL hypermedia metadata.
+      properties:
+        appeared_at:
+          type: string
+          format: date-time
+          description: The date and time the quote first appeared in the source.
+          example: '2016-09-26T00:00:00.000Z'
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the quote was created in the system.
+          example: '2017-02-15T16:13:32.456Z'
+        quote_id:
+          type: string
+          description: Unique URL-safe identifier for the quote.
+          example: GYDdK40iSrSiyVAm2J_TKQ
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tag values associated with the quote.
+          example:
+          - Mexico
+          - Wall
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the quote was last updated.
+          example: '2017-02-15T16:13:32.456Z'
+        value:
+          type: string
+          description: The actual quote text.
+          example: I will build a great wall.
+        _links:
+          type: object
+          description: HAL hypermedia links related to the quote (self, etc.).
+          additionalProperties: true
+        _embedded:
+          type: object
+          description: HAL embedded resources for the quote (author, source).
+          properties:
+            author:
+              type: array
+              items:
+                $ref: '#/components/schemas/Author'
+            source:
+              type: array
+              items:
+                $ref: '#/components/schemas/Source'
+    Author:
+      type: object
+      description: An author record (e.g. Donald Trump) attached to one or more quotes.
+      properties:
+        author_id:
+          type: string
+          description: Unique URL-safe identifier for the author.
+          example: 86xX9JdJSlqIo86xJoiqAA
+        name:
+          type: string
+          description: Display name of the author.
+          example: Donald Trump
+        slug:
+          type: string
+          description: URL-friendly slug for the author.
+          example: donald-trump
+        bio:
+          type: string
+          description: Short biography of the author.
+          example: 45th and 47th President of the United States.
+        _links:
+          type: object
+          description: HAL hypermedia links related to the author.
+          additionalProperties: true
+    Source:
+      type: object
+      description: A source document (tweet, transcript, article) underpinning a quote.
+      properties:
+        source_id:
+          type: string
+          description: Unique URL-safe identifier for the source.
+          example: 2u3o8DcvSluqZ27WtmlGCw
+        url:
+          type: string
+          format: uri
+          description: Canonical URL of the source document.
+          example: https://twitter.com/realDonaldTrump/status/780494805192454144
+        filename:
+          type: string
+          description: Filename of the archived source on disk.
+          example: '780494805192454144.txt'
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the source was created.
+          example: '2017-02-15T16:13:32.456Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the source was last updated.
+          example: '2017-02-15T16:13:32.456Z'
+        _links:
+          type: object
+          description: HAL hypermedia links related to the source.
+          additionalProperties: true
+    Tag:
+      type: object
+      description: A tag in the controlled vocabulary applied to quotes.
+      properties:
+        value:
+          type: string
+          description: The tag value string.
+          example: Wall
+        _links:
+          type: object
+          description: HAL hypermedia links related to the tag.
+          additionalProperties: true
+    QuoteSearchResponse:
+      type: object
+      description: HAL response wrapper for paginated quote search and tag results.
+      properties:
+        count:
+          type: integer
+          description: Number of quotes returned on this page.
+          example: 2
+        total:
+          type: integer
+          description: Total number of quotes matching the query across all pages.
+          example: 2
+        _embedded:
+          type: object
+          properties:
+            quotes:
+              type: array
+              items:
+                $ref: '#/components/schemas/Quote'
+        _links:
+          type: object
+          description: HAL pagination links (self, next, prev).
+          additionalProperties: true
+    TagListResponse:
+      type: object
+      description: HAL response wrapper for the tag vocabulary listing.
+      properties:
+        count:
+          type: integer
+          description: Number of tags returned on this page.
+          example: 3
+        total:
+          type: integer
+          description: Total number of tags in the vocabulary.
+          example: 3
+        _embedded:
+          type: object
+          properties:
+            tags:
+              type: array
+              items:
+                $ref: '#/components/schemas/Tag'
+        _links:
+          type: object
+          description: HAL pagination links.
+          additionalProperties: true
+    AuthorListResponse:
+      type: object
+      description: HAL response wrapper for the author listing.
+      properties:
+        count:
+          type: integer
+          description: Number of authors returned on this page.
+          example: 1
+        total:
+          type: integer
+          description: Total number of authors in the system.
+          example: 1
+        _embedded:
+          type: object
+          properties:
+            authors:
+              type: array
+              items:
+                $ref: '#/components/schemas/Author'
+        _links:
+          type: object
+          description: HAL pagination links.
+          additionalProperties: true
+    SourceListResponse:
+      type: object
+      description: HAL response wrapper for the source document listing.
+      properties:
+        count:
+          type: integer
+          description: Number of sources returned on this page.
+          example: 1
+        total:
+          type: integer
+          description: Total number of sources in the system.
+          example: 1
+        _embedded:
+          type: object
+          properties:
+            sources:
+              type: array
+              items:
+                $ref: '#/components/schemas/Source'
+        _links:
+          type: object
+          description: HAL pagination links.
+          additionalProperties: true
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
+externalDocs:
+  description: Original Tronald Dump Documentation (historical)
+  url: https://www.tronalddump.io/

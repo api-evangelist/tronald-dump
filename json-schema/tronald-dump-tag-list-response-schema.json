@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/main/json-schema/tronald-dump-tag-list-response-schema.json",
+  "title": "TagListResponse",
+  "description": "HAL response wrapper for the tag vocabulary listing.",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of tags returned on this page.",
+      "example": 3
+    },
+    "total": {
+      "type": "integer",
+      "description": "Total number of tags in the vocabulary.",
+      "example": 3
+    },
+    "_embedded": {
+      "type": "object",
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "A tag in the controlled vocabulary applied to quotes.",
+            "properties": {
+              "value": {
+                "type": "string",
+                "description": "The tag value string.",
+                "example": "Wall"
+              },
+              "_links": {
+                "type": "object",
+                "description": "HAL hypermedia links related to the tag.",
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL pagination links.",
+      "additionalProperties": true
+    }
+  }
+}

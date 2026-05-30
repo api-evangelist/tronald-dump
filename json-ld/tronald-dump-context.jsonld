@@ -1,0 +1,79 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "td": "https://www.tronalddump.io/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Quote": "td:Quote",
+    "Author": "td:Author",
+    "Source": "td:Source",
+    "Tag": "td:Tag",
+    "QuoteSearchResponse": "td:QuoteSearchResponse",
+    "TagListResponse": "td:TagListResponse",
+    "AuthorListResponse": "td:AuthorListResponse",
+    "SourceListResponse": "td:SourceListResponse",
+    "Error": "td:Error",
+    "appearedAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "quoteId": {
+      "@id": "td:quote_id",
+      "@type": "xsd:string"
+    },
+    "tags": {
+      "@id": "td:tags",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "updatedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "value": {
+      "@id": "td:value",
+      "@type": "xsd:string"
+    },
+    "authorId": {
+      "@id": "td:author_id",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "slug": {
+      "@id": "td:slug",
+      "@type": "xsd:string"
+    },
+    "bio": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "sourceId": {
+      "@id": "td:source_id",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "filename": {
+      "@id": "td:filename",
+      "@type": "xsd:string"
+    },
+    "count": {
+      "@id": "td:count",
+      "@type": "xsd:integer"
+    },
+    "total": {
+      "@id": "td:total",
+      "@type": "xsd:integer"
+    }
+  }
+}

@@ -1,0 +1,110 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Tronald Dump Quotes API — Authors
+  description: >-
+    Quotes — Authors. 2 operations. Lead operation: Tronald Dump Get All
+    Authors. Self-contained Naftiko capability covering one Tronald Dump
+    business surface.
+  tags:
+  - Tronald Dump
+  - Authors
+  - HAL
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+- namespace: env
+  keys:
+    TRONALD_DUMP_BASE_URI: TRONALD_DUMP_BASE_URI
+capability:
+  consumes:
+  - type: http
+    namespace: quotes-authors
+    baseUri: https://api.tronalddump.io
+    description: Tronald Dump Quotes API — Authors business capability. Self-contained, no shared references.
+    resources:
+    - name: author
+      path: /author
+      operations:
+      - name: getAllAuthors
+        method: GET
+        description: Tronald Dump Get All Authors
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: author-by-id
+      path: /author/{author_id}
+      operations:
+      - name: getAuthorById
+        method: GET
+        description: Tronald Dump Get Author by ID
+        inputParameters:
+        - name: author_id
+          in: path
+          type: string
+          required: true
+          description: The unique identifier of the author.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: quotes-authors-rest
+    port: 8080
+    description: REST adapter for Tronald Dump Quotes API — Authors. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/authors
+      name: authors
+      description: REST surface for authors.
+      operations:
+      - method: GET
+        name: getAllAuthors
+        description: Tronald Dump Get All Authors
+        call: quotes-authors.getAllAuthors
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/authors/{author-id}
+      name: author-by-id
+      description: REST surface for author-by-id.
+      operations:
+      - method: GET
+        name: getAuthorById
+        description: Tronald Dump Get Author by ID
+        call: quotes-authors.getAuthorById
+        with:
+          author_id: rest.author_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quotes-authors-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Tronald Dump Quotes API — Authors. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: list-authors
+      description: Tronald Dump Get All Authors
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quotes-authors.getAllAuthors
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-author-by-id
+      description: Tronald Dump Get Author by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quotes-authors.getAuthorById
+      with:
+        author_id: tools.author_id
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,110 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Tronald Dump Quotes API — Sources
+  description: >-
+    Quotes — Sources. 2 operations. Lead operation: Tronald Dump Get All
+    Sources. Self-contained Naftiko capability covering one Tronald Dump
+    business surface.
+  tags:
+  - Tronald Dump
+  - Sources
+  - HAL
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+- namespace: env
+  keys:
+    TRONALD_DUMP_BASE_URI: TRONALD_DUMP_BASE_URI
+capability:
+  consumes:
+  - type: http
+    namespace: quotes-sources
+    baseUri: https://api.tronalddump.io
+    description: Tronald Dump Quotes API — Sources business capability. Self-contained, no shared references.
+    resources:
+    - name: source
+      path: /source
+      operations:
+      - name: getAllSources
+        method: GET
+        description: Tronald Dump Get All Sources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: source-by-id
+      path: /source/{source_id}
+      operations:
+      - name: getSourceById
+        method: GET
+        description: Tronald Dump Get Source by ID
+        inputParameters:
+        - name: source_id
+          in: path
+          type: string
+          required: true
+          description: The unique identifier of the source.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: quotes-sources-rest
+    port: 8080
+    description: REST adapter for Tronald Dump Quotes API — Sources. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/sources
+      name: sources
+      description: REST surface for sources.
+      operations:
+      - method: GET
+        name: getAllSources
+        description: Tronald Dump Get All Sources
+        call: quotes-sources.getAllSources
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/sources/{source-id}
+      name: source-by-id
+      description: REST surface for source-by-id.
+      operations:
+      - method: GET
+        name: getSourceById
+        description: Tronald Dump Get Source by ID
+        call: quotes-sources.getSourceById
+        with:
+          source_id: rest.source_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quotes-sources-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Tronald Dump Quotes API — Sources. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: list-sources
+      description: Tronald Dump Get All Sources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quotes-sources.getAllSources
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-source-by-id
+      description: Tronald Dump Get Source by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quotes-sources.getSourceById
+      with:
+        source_id: tools.source_id
+      outputParameters:
+      - type: object
+        mapping: $.

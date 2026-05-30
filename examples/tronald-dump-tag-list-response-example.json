@@ -1,0 +1,10 @@
+{
+  "count": 3,
+  "total": 3,
+  "_embedded": {
+    "tags": [
+      {}
+    ]
+  },
+  "_links": {}
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/main/json-structure/tronald-dump-author-structure.json",
+  "name": "Author",
+  "description": "An author record (e.g. Donald Trump) attached to one or more quotes.",
+  "type": "object",
+  "properties": {
+    "author_id": {
+      "type": "string",
+      "description": "Unique URL-safe identifier for the author.",
+      "example": "86xX9JdJSlqIo86xJoiqAA"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the author.",
+      "example": "Donald Trump"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly slug for the author.",
+      "example": "donald-trump"
+    },
+    "bio": {
+      "type": "string",
+      "description": "Short biography of the author.",
+      "example": "45th and 47th President of the United States."
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL hypermedia links related to the author.",
+      "additionalProperties": true
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/main/json-structure/tronald-dump-source-structure.json",
+  "name": "Source",
+  "description": "A source document (tweet, transcript, article) underpinning a quote.",
+  "type": "object",
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "description": "Unique URL-safe identifier for the source.",
+      "example": "2u3o8DcvSluqZ27WtmlGCw"
+    },
+    "url": {
+      "type": "uri",
+      "description": "Canonical URL of the source document.",
+      "example": "https://twitter.com/realDonaldTrump/status/780494805192454144"
+    },
+    "filename": {
+      "type": "string",
+      "description": "Filename of the archived source on disk.",
+      "example": "780494805192454144.txt"
+    },
+    "created_at": {
+      "type": "datetime",
+      "description": "The date and time the source was created.",
+      "example": "2017-02-15T16:13:32.456Z"
+    },
+    "updated_at": {
+      "type": "datetime",
+      "description": "The date and time the source was last updated.",
+      "example": "2017-02-15T16:13:32.456Z"
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL hypermedia links related to the source.",
+      "additionalProperties": true
+    }
+  }
+}

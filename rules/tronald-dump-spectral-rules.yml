@@ -1,0 +1,442 @@
+# Tronald Dump Spectral Ruleset
+#
+# Opinionated Spectral rules derived from analysis of the Tronald Dump
+# Quotes API. The Tronald Dump API was a small, public, no-auth REST API
+# returning HAL (Hypertext Application Language) JSON for a corpus of
+# Donald Trump quotes. Conventions enforced here reflect the observed
+# patterns: kebab-case paths, snake_case schema properties, camelCase
+# operationIds with verb prefixes (get/search), Title Case tags grouping
+# by entity (Quotes, Tags, Authors, Sources), and HAL response envelopes
+# with `_links` and `_embedded` sections.
+#
+# Apply with: spectral lint openapi/*.yml -r rules/tronald-dump-spectral-rules.yml
+
+extends:
+- "spectral:oas"
+
+rules:
+
+  # ─────────────────────────────────────────────────────────────────────
+  # INFO / METADATA
+  # ─────────────────────────────────────────────────────────────────────
+
+  info-title-prefix:
+    description: "Spec title MUST begin with 'Tronald Dump'."
+    severity: error
+    given: "$.info.title"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Tronald Dump"
+
+  info-description-required:
+    description: "API description MUST be present and at least 60 characters."
+    severity: error
+    given: "$.info.description"
+    then:
+      function: length
+      functionOptions:
+        min: 60
+
+  info-contact-required:
+    description: "Contact block MUST be present with at least a name."
+    severity: warn
+    given: "$.info.contact"
+    then:
+      field: name
+      function: truthy
+
+  info-license-required:
+    description: "License block MUST be defined."
+    severity: warn
+    given: "$.info.license"
+    then:
+      function: truthy
+
+  info-version-required:
+    description: "Spec version MUST be present."
+    severity: error
+    given: "$.info.version"
+    then:
+      function: truthy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # OPENAPI VERSION
+  # ─────────────────────────────────────────────────────────────────────
+
+  openapi-version-3:
+    description: "Use OpenAPI 3.0.x or 3.1.x."
+    severity: error
+    given: "$.openapi"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^3\\."
+
+  # ─────────────────────────────────────────────────────────────────────
+  # SERVERS
+  # ─────────────────────────────────────────────────────────────────────
+
+  servers-required:
+    description: "At least one server URL MUST be defined."
+    severity: error
+    given: "$.servers"
+    then:
+      function: length
+      functionOptions:
+        min: 1
+
+  servers-https:
+    description: "Server URLs MUST use https."
+    severity: warn
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  servers-description-required:
+    description: "Each server entry MUST include a description."
+    severity: warn
+    given: "$.servers[*]"
+    then:
+      field: description
+      function: truthy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # PATHS — NAMING CONVENTIONS
+  # ─────────────────────────────────────────────────────────────────────
+
+  paths-kebab-case-or-template:
+    description: "Path segments MUST be lowercase kebab-case or {snake_case} templates."
+    severity: warn
+    given: "$.paths.*~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9-]+|/\\{[a-z0-9_]+\\})+$"
+
+  paths-no-trailing-slash:
+    description: "Paths MUST NOT end with a trailing slash."
+    severity: error
+    given: "$.paths.*~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: ".+/$"
+
+  paths-no-query-string:
+    description: "Paths MUST NOT contain a query string."
+    severity: error
+    given: "$.paths.*~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "\\?"
+
+  paths-no-file-extensions:
+    description: "Paths SHOULD NOT carry file extensions (.json, .xml)."
+    severity: warn
+    given: "$.paths.*~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "\\.(json|xml|html)$"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # OPERATIONS
+  # ─────────────────────────────────────────────────────────────────────
+
+  operation-operationid-required:
+    description: "Every operation MUST have an operationId."
+    severity: error
+    given: "$.paths.*[get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: truthy
+
+  operation-operationid-camel-case:
+    description: "operationId MUST be camelCase."
+    severity: error
+    given: "$.paths.*[get,post,put,patch,delete].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
+
+  operation-operationid-verb-prefix:
+    description: "operationId SHOULD start with a verb (get, list, search, create, update, delete)."
+    severity: warn
+    given: "$.paths.*[get,post,put,patch,delete].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(get|list|search|create|update|delete|find|lookup)"
+
+  operation-summary-required:
+    description: "Every operation MUST have a summary."
+    severity: error
+    given: "$.paths.*[get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: truthy
+
+  operation-summary-prefix:
+    description: "Operation summaries SHOULD begin with 'Tronald Dump'."
+    severity: warn
+    given: "$.paths.*[get,post,put,patch,delete].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Tronald Dump"
+
+  operation-description-required:
+    description: "Every operation MUST have a description."
+    severity: error
+    given: "$.paths.*[get,post,put,patch,delete]"
+    then:
+      field: description
+      function: truthy
+
+  operation-tags-required:
+    description: "Every operation MUST have at least one tag."
+    severity: error
+    given: "$.paths.*[get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          minItems: 1
+
+  operation-microcks-extension:
+    description: "Every operation SHOULD include x-microcks-operation for mock compatibility."
+    severity: info
+    given: "$.paths.*[get,post,put,patch,delete]"
+    then:
+      field: x-microcks-operation
+      function: truthy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # TAGS
+  # ─────────────────────────────────────────────────────────────────────
+
+  tags-global-defined:
+    description: "Top-level tags array MUST be defined."
+    severity: warn
+    given: "$.tags"
+    then:
+      function: length
+      functionOptions:
+        min: 1
+
+  tag-description-required:
+    description: "Every global tag MUST have a description."
+    severity: warn
+    given: "$.tags[*]"
+    then:
+      field: description
+      function: truthy
+
+  tag-title-case:
+    description: "Tag names MUST be Title Case (single capitalized word or capitalized words separated by spaces)."
+    severity: warn
+    given: "$.tags[*].name"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9]*( [A-Z][a-zA-Z0-9]*)*$"
+
+  # ─────────────────────────────────────────────────────────────────────
+  # PARAMETERS
+  # ─────────────────────────────────────────────────────────────────────
+
+  parameter-description-required:
+    description: "Every parameter MUST have a description."
+    severity: error
+    given: "$.paths.*.*.parameters[*]"
+    then:
+      field: description
+      function: truthy
+
+  parameter-snake-case:
+    description: "Parameter names MUST be snake_case."
+    severity: warn
+    given: "$.paths.*.*.parameters[*].name"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-z0-9_]*$"
+
+  parameter-schema-required:
+    description: "Every parameter MUST have a schema with a type."
+    severity: error
+    given: "$.paths.*.*.parameters[*]"
+    then:
+      field: schema
+      function: truthy
+
+  parameter-pagination-standard:
+    description: "Pagination parameters MUST be named 'page' and 'size' (Tronald Dump convention)."
+    severity: warn
+    given: "$.paths.*.*.parameters[?(@.in=='query' && (@.name=='offset' || @.name=='limit' || @.name=='per_page' || @.name=='pageSize'))]"
+    then:
+      function: falsy
+
+  parameter-example-encouraged:
+    description: "Parameters SHOULD include an example value."
+    severity: info
+    given: "$.paths.*.*.parameters[*]"
+    then:
+      field: example
+      function: truthy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # RESPONSES
+  # ─────────────────────────────────────────────────────────────────────
+
+  response-200-required:
+    description: "Every GET operation MUST define a 200 response."
+    severity: error
+    given: "$.paths.*.get.responses"
+    then:
+      field: "200"
+      function: truthy
+
+  response-404-on-id-paths:
+    description: "Path operations with an ID parameter SHOULD define a 404 response."
+    severity: warn
+    given: "$.paths[?(@property.match(/\\{.+\\}/))].*.responses"
+    then:
+      field: "404"
+      function: truthy
+
+  response-500-encouraged:
+    description: "Operations SHOULD document a 500 response."
+    severity: info
+    given: "$.paths.*[get,post,put,patch,delete].responses"
+    then:
+      field: "500"
+      function: truthy
+
+  response-description-required:
+    description: "Every response MUST have a description."
+    severity: error
+    given: "$.paths.*.*.responses.*"
+    then:
+      field: description
+      function: truthy
+
+  response-hal-content-type:
+    description: "Successful responses SHOULD use application/hal+json (HAL convention)."
+    severity: info
+    given: "$.paths.*.*.responses[?(@property.match(/^2\\d{2}$/))].content"
+    then:
+      field: "application/hal+json"
+      function: truthy
+
+  response-example-encouraged:
+    description: "Responses SHOULD include at least one named example."
+    severity: info
+    given: "$.paths.*.*.responses.*.content.*"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+          - required: ["example"]
+          - required: ["examples"]
+
+  # ─────────────────────────────────────────────────────────────────────
+  # SCHEMAS — PROPERTY NAMING
+  # ─────────────────────────────────────────────────────────────────────
+
+  schema-snake-case-properties:
+    description: "Schema property names MUST be snake_case (except HAL conventions _links, _embedded)."
+    severity: warn
+    given: "$.components.schemas.*.properties.*~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(_links|_embedded|[a-z][a-z0-9_]*)$"
+
+  schema-description-required:
+    description: "Top-level component schemas MUST have a description."
+    severity: warn
+    given: "$.components.schemas.*"
+    then:
+      field: description
+      function: truthy
+
+  schema-type-required:
+    description: "Schemas MUST declare a type."
+    severity: error
+    given: "$.components.schemas.*"
+    then:
+      field: type
+      function: truthy
+
+  schema-id-suffix:
+    description: "Unique identifier properties SHOULD be named with an _id suffix."
+    severity: info
+    given: "$.components.schemas.*.properties[?(@property == 'id' || @property == 'identifier')]~"
+    then:
+      function: falsy
+
+  schema-hal-links-on-resources:
+    description: "Resource schemas SHOULD include a _links property for HAL hypermedia."
+    severity: info
+    given: "$.components.schemas[?(@property.match(/^(Quote|Author|Source|Tag)$/))].properties"
+    then:
+      field: _links
+      function: truthy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # SECURITY
+  # ─────────────────────────────────────────────────────────────────────
+
+  security-not-required-public-api:
+    description: "Tronald Dump is a public, no-auth API. The global `security` field SHOULD be omitted."
+    severity: info
+    given: "$.security"
+    then:
+      function: falsy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # HTTP METHOD CONVENTIONS
+  # ─────────────────────────────────────────────────────────────────────
+
+  get-no-request-body:
+    description: "GET operations MUST NOT define a request body."
+    severity: error
+    given: "$.paths.*.get"
+    then:
+      field: requestBody
+      function: falsy
+
+  delete-no-request-body:
+    description: "DELETE operations MUST NOT define a request body."
+    severity: error
+    given: "$.paths.*.delete"
+    then:
+      field: requestBody
+      function: falsy
+
+  # ─────────────────────────────────────────────────────────────────────
+  # GENERAL QUALITY
+  # ─────────────────────────────────────────────────────────────────────
+
+  no-empty-description:
+    description: "Descriptions MUST NOT be empty strings."
+    severity: error
+    given: "$..description"
+    then:
+      function: truthy
+
+  external-docs-encouraged:
+    description: "Spec SHOULD include externalDocs pointing at provider documentation."
+    severity: info
+    given: "$.externalDocs"
+    then:
+      function: truthy

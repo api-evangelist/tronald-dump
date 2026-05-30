@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/main/json-schema/tronald-dump-quote-search-response-schema.json",
+  "title": "QuoteSearchResponse",
+  "description": "HAL response wrapper for paginated quote search and tag results.",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer",
+      "description": "Number of quotes returned on this page.",
+      "example": 2
+    },
+    "total": {
+      "type": "integer",
+      "description": "Total number of quotes matching the query across all pages.",
+      "example": 2
+    },
+    "_embedded": {
+      "type": "object",
+      "properties": {
+        "quotes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "A single Donald Trump quote with HAL hypermedia metadata.",
+            "properties": {
+              "appeared_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date and time the quote first appeared in the source.",
+                "example": "2016-09-26T00:00:00.000Z"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date and time the quote was created in the system.",
+                "example": "2017-02-15T16:13:32.456Z"
+              },
+              "quote_id": {
+                "type": "string",
+                "description": "Unique URL-safe identifier for the quote.",
+                "example": "GYDdK40iSrSiyVAm2J_TKQ"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tag values associated with the quote.",
+                "example": [
+                  "Mexico",
+                  "Wall"
+                ]
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date and time the quote was last updated.",
+                "example": "2017-02-15T16:13:32.456Z"
+              },
+              "value": {
+                "type": "string",
+                "description": "The actual quote text.",
+                "example": "I will build a great wall."
+              },
+              "_links": {
+                "type": "object",
+                "description": "HAL hypermedia links related to the quote (self, etc.).",
+                "additionalProperties": true
+              },
+              "_embedded": {
+                "type": "object",
+                "description": "HAL embedded resources for the quote (author, source).",
+                "properties": {
+                  "author": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "description": "An author record (e.g. Donald Trump) attached to one or more quotes.",
+                      "properties": {
+                        "author_id": {
+                          "type": "string",
+                          "description": "Unique URL-safe identifier for the author.",
+                          "example": "86xX9JdJSlqIo86xJoiqAA"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Display name of the author.",
+                          "example": "Donald Trump"
+                        },
+                        "slug": {
+                          "type": "string",
+                          "description": "URL-friendly slug for the author.",
+                          "example": "donald-trump"
+                        },
+                        "bio": {
+                          "type": "string",
+                          "description": "Short biography of the author.",
+                          "example": "45th and 47th President of the United States."
+                        },
+                        "_links": {
+                          "type": "object",
+                          "description": "HAL hypermedia links related to the author.",
+                          "additionalProperties": true
+                        }
+                      }
+                    }
+                  },
+                  "source": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "description": "A source document (tweet, transcript, article) underpinning a quote.",
+                      "properties": {
+                        "source_id": {
+                          "type": "string",
+                          "description": "Unique URL-safe identifier for the source.",
+                          "example": "2u3o8DcvSluqZ27WtmlGCw"
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "Canonical URL of the source document.",
+                          "example": "https://twitter.com/realDonaldTrump/status/780494805192454144"
+                        },
+                        "filename": {
+                          "type": "string",
+                          "description": "Filename of the archived source on disk.",
+                          "example": "780494805192454144.txt"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The date and time the source was created.",
+                          "example": "2017-02-15T16:13:32.456Z"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The date and time the source was last updated.",
+                          "example": "2017-02-15T16:13:32.456Z"
+                        },
+                        "_links": {
+                          "type": "object",
+                          "description": "HAL hypermedia links related to the source.",
+                          "additionalProperties": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL pagination links (self, next, prev).",
+      "additionalProperties": true
+    }
+  }
+}

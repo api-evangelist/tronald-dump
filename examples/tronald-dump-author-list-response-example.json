@@ -1,0 +1,10 @@
+{
+  "count": 1,
+  "total": 1,
+  "_embedded": {
+    "authors": [
+      {}
+    ]
+  },
+  "_links": {}
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/main/json-schema/tronald-dump-tag-schema.json",
+  "title": "Tag",
+  "description": "A tag in the controlled vocabulary applied to quotes.",
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "The tag value string.",
+      "example": "Wall"
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL hypermedia links related to the tag.",
+      "additionalProperties": true
+    }
+  }
+}

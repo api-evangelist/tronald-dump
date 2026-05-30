@@ -1,0 +1,10 @@
+{
+  "count": 2,
+  "total": 2,
+  "_embedded": {
+    "quotes": [
+      {}
+    ]
+  },
+  "_links": {}
+}
