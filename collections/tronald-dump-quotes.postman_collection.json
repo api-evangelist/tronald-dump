@@ -1,0 +1,1470 @@
+{
+  "item": [
+    {
+      "id": "1f1748dc-e1d1-48ed-9bef-cea52b34f7ec",
+      "name": "Quotes",
+      "description": {
+        "content": "Retrieve Donald Trump quotes individually, randomly, or via full text search.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7b7ca592-e6b4-46ec-87e1-f15be9541e68",
+          "name": "Tronald Dump Get Random Quote",
+          "request": {
+            "name": "Tronald Dump Get Random Quote",
+            "description": {
+              "content": "Returns a single random Donald Trump quote with HAL `_links` and `_embedded` author/source records.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "random",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e2bc942-be99-49aa-9d00-22dd27bddddb",
+              "name": "A random quote was returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "random",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"appeared_at\": \"2016-09-26T00:00:00.000Z\",\n  \"created_at\": \"2017-02-15T16:13:32.456Z\",\n  \"quote_id\": \"GYDdK40iSrSiyVAm2J_TKQ\",\n  \"tags\": [\n    \"Mexico\",\n    \"Wall\"\n  ],\n  \"updated_at\": \"2017-02-15T16:13:32.456Z\",\n  \"value\": \"When Mexico sends its people, they're not sending their best.\",\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/quote/GYDdK40iSrSiyVAm2J_TKQ\"\n    }\n  },\n  \"_embedded\": {\n    \"author\": [\n      {\n        \"author_id\": \"86xX9JdJSlqIo86xJoiqAA\",\n        \"name\": \"Donald Trump\",\n        \"slug\": \"donald-trump\",\n        \"bio\": \"45th and 47th President of the United States.\"\n      }\n    ],\n    \"source\": [\n      {\n        \"source_id\": \"2u3o8DcvSluqZ27WtmlGCw\",\n        \"url\": \"https://twitter.com/realDonaldTrump/status/780494805192454144\",\n        \"filename\": \"780494805192454144.txt\",\n        \"created_at\": \"2017-02-15T16:13:32.456Z\",\n        \"updated_at\": \"2017-02-15T16:13:32.456Z\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56c19171-b0dd-46da-a86d-d74e219f08e4",
+              "name": "No quote available.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "random",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"message\": \"No quote found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35ca8133-222c-412a-8e4e-eea625d78d5d",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "random",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "622835a1-6d0a-4893-af5c-fb3973e533b0",
+          "name": "Tronald Dump Get Quote by ID",
+          "request": {
+            "name": "Tronald Dump Get Quote by ID",
+            "description": {
+              "content": "Returns a specific Donald Trump quote by its unique identifier, with HAL `_links` and `_embedded` author/source records.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quote",
+                ":quote_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "quote_id",
+                  "description": "(Required) The unique identifier of the quote."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f209859e-1f23-4c5e-b340-e37b9f35a9eb",
+              "name": "The quote was found and returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quote",
+                    ":quote_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) The unique identifier of the quote."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"appeared_at\": \"2016-09-26T00:00:00.000Z\",\n  \"created_at\": \"2017-02-15T16:13:32.456Z\",\n  \"quote_id\": \"GYDdK40iSrSiyVAm2J_TKQ\",\n  \"tags\": [\n    \"Mexico\",\n    \"Wall\"\n  ],\n  \"updated_at\": \"2017-02-15T16:13:32.456Z\",\n  \"value\": \"I will build a great wall.\",\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/quote/GYDdK40iSrSiyVAm2J_TKQ\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5907c950-5401-4eb0-a3e9-23b7ce783c7a",
+              "name": "Quote not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quote",
+                    ":quote_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) The unique identifier of the quote."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"message\": \"Quote not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d48bd850-1119-4ba1-babc-6b7e97a9bccb",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quote",
+                    ":quote_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "quote_id",
+                      "description": "(Required) The unique identifier of the quote."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a3c3bdf-9430-4967-80b1-041216f8368d",
+          "name": "Tronald Dump Search Quotes",
+          "request": {
+            "name": "Tronald Dump Search Quotes",
+            "description": {
+              "content": "Full text search across the corpus of Donald Trump quotes. Returns a HAL response with `_embedded.quotes`, total/count metadata, and pagination links.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) Free text query string to search quote values against."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Zero-indexed page number for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "25",
+                  "description": "Number of results returned per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b57c7506-f946-4765-b898-2b44f8d59c69",
+              "name": "Search returned successfully (may contain zero matches).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "wall"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"count\": 2,\n  \"total\": 2,\n  \"_embedded\": {\n    \"quotes\": [\n      {\n        \"appeared_at\": \"2016-09-26T00:00:00.000Z\",\n        \"created_at\": \"2017-02-15T16:13:32.456Z\",\n        \"quote_id\": \"GYDdK40iSrSiyVAm2J_TKQ\",\n        \"tags\": [\n          \"Mexico\",\n          \"Wall\"\n        ],\n        \"value\": \"I will build a great wall.\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/quote/GYDdK40iSrSiyVAm2J_TKQ\"\n          }\n        }\n      },\n      {\n        \"appeared_at\": \"2016-10-09T00:00:00.000Z\",\n        \"created_at\": \"2017-02-15T16:13:32.456Z\",\n        \"quote_id\": \"9aN8b3CMQpaLvSf7Z_ToWQ\",\n        \"tags\": [\n          \"Wall\"\n        ],\n        \"value\": \"The wall just got 10 feet taller.\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/quote/9aN8b3CMQpaLvSf7Z_ToWQ\"\n          }\n        }\n      }\n    ]\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/search/quote?query=wall&page=0&size=25\"\n    },\n    \"next\": {\n      \"href\": \"/search/quote?query=wall&page=1&size=25\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7958042-739c-4f72-bc5f-77f23bebf196",
+              "name": "No quotes matched the query.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "wall"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"message\": \"No quotes found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "042893e7-bc28-4369-882c-4c35dcaa83c9",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "wall"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "bb6d8c64-39ef-4ca0-b178-5d707b0c6bcc",
+      "name": "Tags",
+      "description": {
+        "content": "Browse the controlled vocabulary of tags attached to quotes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "efa0b55b-3163-453e-9157-f4d7e9f1e410",
+          "name": "Tronald Dump Get All Tags",
+          "request": {
+            "name": "Tronald Dump Get All Tags",
+            "description": {
+              "content": "Returns the controlled vocabulary of all tags that exist across the quote corpus.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tag"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8ef4dcf-360b-465a-9ff0-3781eedbafe0",
+              "name": "Tag list returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tag"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"count\": 3,\n  \"total\": 3,\n  \"_embedded\": {\n    \"tags\": [\n      {\n        \"value\": \"Wall\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/tag/Wall\"\n          }\n        }\n      },\n      {\n        \"value\": \"Mexico\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/tag/Mexico\"\n          }\n        }\n      },\n      {\n        \"value\": \"China\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/tag/China\"\n          }\n        }\n      }\n    ]\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/tag\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78ffb2fd-c6a4-444a-9717-8ef41bade9f5",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tag"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f9f0b1c5-d8c0-4028-bac4-d14f41ab4365",
+          "name": "Tronald Dump Get Quotes by Tag",
+          "request": {
+            "name": "Tronald Dump Get Quotes by Tag",
+            "description": {
+              "content": "Returns the set of Donald Trump quotes associated with a specific tag value, with HAL pagination metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tag",
+                ":tag_value"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Zero-indexed page number for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "25",
+                  "description": "Number of results returned per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tag_value",
+                  "description": "(Required) The exact tag value to filter quotes by."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "811a3355-104a-4e3c-a523-000122e145fd",
+              "name": "Tag matched and quotes returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tag",
+                    ":tag_value"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tag_value",
+                      "description": "(Required) The exact tag value to filter quotes by."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"count\": 1,\n  \"total\": 1,\n  \"_embedded\": {\n    \"quotes\": [\n      {\n        \"appeared_at\": \"2016-09-26T00:00:00.000Z\",\n        \"created_at\": \"2017-02-15T16:13:32.456Z\",\n        \"quote_id\": \"GYDdK40iSrSiyVAm2J_TKQ\",\n        \"tags\": [\n          \"Wall\"\n        ],\n        \"value\": \"I will build a great wall.\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/quote/GYDdK40iSrSiyVAm2J_TKQ\"\n          }\n        }\n      }\n    ]\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/tag/Wall\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1990e799-15db-4694-9485-c87c36816187",
+              "name": "Tag not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tag",
+                    ":tag_value"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tag_value",
+                      "description": "(Required) The exact tag value to filter quotes by."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"message\": \"Tag not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21ea8cab-22fa-4eb5-a7c8-f49a12f30a62",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tag",
+                    ":tag_value"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tag_value",
+                      "description": "(Required) The exact tag value to filter quotes by."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b7eccef3-ffee-4813-85f6-1b103fda7109",
+      "name": "Authors",
+      "description": {
+        "content": "Look up the author records attached to quotes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9c7e052b-fe7b-4c6e-a87e-1bfecddac74f",
+          "name": "Tronald Dump Get All Authors",
+          "request": {
+            "name": "Tronald Dump Get All Authors",
+            "description": {
+              "content": "Returns the list of all author records tracked in the corpus.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "author"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "63d0e434-3fe0-41a2-8278-f03cd84966ef",
+              "name": "Author list returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "author"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"count\": 1,\n  \"total\": 1,\n  \"_embedded\": {\n    \"authors\": [\n      {\n        \"author_id\": \"86xX9JdJSlqIo86xJoiqAA\",\n        \"name\": \"Donald Trump\",\n        \"slug\": \"donald-trump\",\n        \"bio\": \"45th and 47th President of the United States.\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/author/86xX9JdJSlqIo86xJoiqAA\"\n          }\n        }\n      }\n    ]\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/author\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f0d575a-4036-47a9-b7f8-ae3a08443beb",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "author"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc7de8e7-c085-4c93-9d84-bcc264f77fea",
+          "name": "Tronald Dump Get Author by ID",
+          "request": {
+            "name": "Tronald Dump Get Author by ID",
+            "description": {
+              "content": "Returns a specific author record by unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "author",
+                ":author_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "author_id",
+                  "description": "(Required) The unique identifier of the author."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8d1c62a8-1647-4eef-b519-565686d0c101",
+              "name": "Author returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "author",
+                    ":author_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "author_id",
+                      "description": "(Required) The unique identifier of the author."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"author_id\": \"86xX9JdJSlqIo86xJoiqAA\",\n  \"name\": \"Donald Trump\",\n  \"slug\": \"donald-trump\",\n  \"bio\": \"45th and 47th President of the United States.\",\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/author/86xX9JdJSlqIo86xJoiqAA\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d15abaa-c521-4525-94dd-01b6816d0ee8",
+              "name": "Author not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "author",
+                    ":author_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "author_id",
+                      "description": "(Required) The unique identifier of the author."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"message\": \"Author not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd8f4852-ad2c-4c32-89e1-18b7331455a2",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "author",
+                    ":author_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "author_id",
+                      "description": "(Required) The unique identifier of the author."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "403b0645-81f4-4e47-97ab-85f7adc2a47b",
+      "name": "Sources",
+      "description": {
+        "content": "Look up the source documents (tweets, transcripts, articles) attached to quotes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "45d162f6-481b-4daa-82b2-1c649b7f6d68",
+          "name": "Tronald Dump Get All Sources",
+          "request": {
+            "name": "Tronald Dump Get All Sources",
+            "description": {
+              "content": "Returns the list of all source documents (tweets, transcripts, articles) attached to quotes in the corpus.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "source"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6fef8534-a71b-4c75-a590-0a95027a7dbd",
+              "name": "Source list returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"count\": 1,\n  \"total\": 1,\n  \"_embedded\": {\n    \"sources\": [\n      {\n        \"source_id\": \"2u3o8DcvSluqZ27WtmlGCw\",\n        \"url\": \"https://twitter.com/realDonaldTrump/status/780494805192454144\",\n        \"filename\": \"780494805192454144.txt\",\n        \"created_at\": \"2017-02-15T16:13:32.456Z\",\n        \"updated_at\": \"2017-02-15T16:13:32.456Z\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/source/2u3o8DcvSluqZ27WtmlGCw\"\n          }\n        }\n      }\n    ]\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/source\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06dadd5d-db3f-404a-b196-5fa401befec6",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7e39c8a-e26a-4384-b0a2-d5ca4a843dbc",
+          "name": "Tronald Dump Get Source by ID",
+          "request": {
+            "name": "Tronald Dump Get Source by ID",
+            "description": {
+              "content": "Returns a specific source record by unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "source",
+                ":source_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "source_id",
+                  "description": "(Required) The unique identifier of the source."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93162b16-64a4-4c16-bdee-1143405b13eb",
+              "name": "Source returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "source",
+                    ":source_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "source_id",
+                      "description": "(Required) The unique identifier of the source."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"source_id\": \"2u3o8DcvSluqZ27WtmlGCw\",\n  \"url\": \"https://twitter.com/realDonaldTrump/status/780494805192454144\",\n  \"filename\": \"780494805192454144.txt\",\n  \"created_at\": \"2017-02-15T16:13:32.456Z\",\n  \"updated_at\": \"2017-02-15T16:13:32.456Z\",\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/source/2u3o8DcvSluqZ27WtmlGCw\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16f42766-7201-43f8-81c7-401d15436381",
+              "name": "Source not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "source",
+                    ":source_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "source_id",
+                      "description": "(Required) The unique identifier of the source."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"message\": \"Source not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcb78f59-a706-42c7-85a3-985c0d6cf48e",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "source",
+                    ":source_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "source_id",
+                      "description": "(Required) The unique identifier of the source."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tronalddump.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fa9e0360-dc72-4fee-a3cd-7fb60bfe6d1e",
+    "name": "Tronald Dump Quotes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface. Responses follow HAL (Hypertext Application Language) JSON conventions with `_links` and `_embedded` sections for hypermedia navigation. The API supports random quote retrieval, quote lookup by ID, full text search with pagination, tag browsing, author lookup, and source lookup. No authentication is required. The original public service ran at api.tronalddump.io and has gone offline since 2023; this spec is preserved for community SDKs, archival mirrors, and historical reconstruction.\n\nContact Support:\n Name: Marcel Wijnker (Original Author)",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tronald Dump Quotes API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quotes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Tronald Dump Get Random Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/random/quote"
+          },
+          "docs": "Returns a single random Donald Trump quote with HAL `_links` and `_embedded` author/source records."
+        },
+        {
+          "info": {
+            "name": "Tronald Dump Get Quote by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/quote/:quote_id",
+            "params": [
+              {
+                "name": "quote_id",
+                "value": "GYDdK40iSrSiyVAm2J_TKQ",
+                "type": "path",
+                "description": "The unique identifier of the quote."
+              }
+            ]
+          },
+          "docs": "Returns a specific Donald Trump quote by its unique identifier, with HAL `_links` and `_embedded` author/source records."
+        },
+        {
+          "info": {
+            "name": "Tronald Dump Search Quotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/search/quote",
+            "params": [
+              {
+                "name": "query",
+                "value": "wall",
+                "type": "query",
+                "description": "Free text query string to search quote values against."
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Zero-indexed page number for pagination."
+              },
+              {
+                "name": "size",
+                "value": "25",
+                "type": "query",
+                "description": "Number of results returned per page."
+              }
+            ]
+          },
+          "docs": "Full text search across the corpus of Donald Trump quotes. Returns a HAL response with `_embedded.quotes`, total/count metadata, and pagination links."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Tronald Dump Get All Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/tag"
+          },
+          "docs": "Returns the controlled vocabulary of all tags that exist across the quote corpus."
+        },
+        {
+          "info": {
+            "name": "Tronald Dump Get Quotes by Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/tag/:tag_value",
+            "params": [
+              {
+                "name": "tag_value",
+                "value": "Wall",
+                "type": "path",
+                "description": "The exact tag value to filter quotes by."
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Zero-indexed page number for pagination."
+              },
+              {
+                "name": "size",
+                "value": "25",
+                "type": "query",
+                "description": "Number of results returned per page."
+              }
+            ]
+          },
+          "docs": "Returns the set of Donald Trump quotes associated with a specific tag value, with HAL pagination metadata."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Authors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Tronald Dump Get All Authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/author"
+          },
+          "docs": "Returns the list of all author records tracked in the corpus."
+        },
+        {
+          "info": {
+            "name": "Tronald Dump Get Author by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/author/:author_id",
+            "params": [
+              {
+                "name": "author_id",
+                "value": "86xX9JdJSlqIo86xJoiqAA",
+                "type": "path",
+                "description": "The unique identifier of the author."
+              }
+            ]
+          },
+          "docs": "Returns a specific author record by unique identifier."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Tronald Dump Get All Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/source"
+          },
+          "docs": "Returns the list of all source documents (tweets, transcripts, articles) attached to quotes in the corpus."
+        },
+        {
+          "info": {
+            "name": "Tronald Dump Get Source by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/source/:source_id",
+            "params": [
+              {
+                "name": "source_id",
+                "value": "2u3o8DcvSluqZ27WtmlGCw",
+                "type": "path",
+                "description": "The unique identifier of the source."
+              }
+            ]
+          },
+          "docs": "Returns a specific source record by unique identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
