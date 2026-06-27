@@ -64,22 +64,22 @@ common:
   - type: SourceCode
     title: Original Node.js Client (tronalddump-io/client-nodejs)
     url: https://github.com/tronalddump-io/client-nodejs
-  - type: SDK
+  - type: SDKs
     title: TypeScript SDK (voxgig)
     url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/ts
-  - type: SDK
+  - type: SDKs
     title: Python SDK (voxgig)
     url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/py
-  - type: SDK
+  - type: SDKs
     title: Go SDK (voxgig)
     url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/go
-  - type: SDK
+  - type: SDKs
     title: Ruby SDK (voxgig)
     url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/rb
-  - type: SDK
+  - type: SDKs
     title: PHP SDK (voxgig)
     url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/php
-  - type: SDK
+  - type: SDKs
     title: Lua SDK (voxgig)
     url: https://github.com/voxgig-sdk/tronalddump-sdk/tree/main/lua
   - type: CLI
