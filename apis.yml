@@ -54,6 +54,8 @@ apis:
       - FN: Marcel Wijnker
         url: https://github.com/wickedest
 common:
+  - type: DomainSecurity
+    url: security/tronald-dump-domain-security.yml
   - type: Website
     url: https://www.tronalddump.io/
   - type: PublicAPIsListing

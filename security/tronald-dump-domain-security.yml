@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.tronalddump.io
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 14 22:17:07 2026 GMT
+  hsts: false
+- host: api.tronalddump.io
+  https: false
+domains:
+- domain: tronalddump.io
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false
