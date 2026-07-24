@@ -1,0 +1,197 @@
+openapi: 3.0.3
+info:
+  title: Tronald Dump Quotes Authors API
+  description: Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface. Responses follow HAL (Hypertext Application Language) JSON conventions with `_links` and `_embedded` sections for hypermedia navigation. The API supports random quote retrieval, quote lookup by ID, full text search with pagination, tag browsing, author lookup, and source lookup. No authentication is required. The original public service ran at api.tronalddump.io and has gone offline since 2023; this spec is preserved for community SDKs, archival mirrors, and historical reconstruction.
+  version: 1.0.0
+  contact:
+    name: Marcel Wijnker (Original Author)
+    url: https://github.com/wickedest
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  x-generated-from: documentation
+  x-last-validated: '2026-05-30'
+  x-api-status: offline-historical
+servers:
+- url: https://api.tronalddump.io
+  description: Tronald Dump Production (historical, offline since 2023)
+tags:
+- name: Authors
+  description: Look up the author records attached to quotes.
+paths:
+  /author:
+    get:
+      operationId: getAllAuthors
+      summary: Tronald Dump Get All Authors
+      description: Returns the list of all author records tracked in the corpus.
+      tags:
+      - Authors
+      responses:
+        '200':
+          description: Author list returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/AuthorListResponse'
+              examples:
+                GetAllAuthors200Example:
+                  summary: Default getAllAuthors 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 1
+                    total: 1
+                    _embedded:
+                      authors:
+                      - author_id: 86xX9JdJSlqIo86xJoiqAA
+                        name: Donald Trump
+                        slug: donald-trump
+                        bio: 45th and 47th President of the United States.
+                        _links:
+                          self:
+                            href: /author/86xX9JdJSlqIo86xJoiqAA
+                    _links:
+                      self:
+                        href: /author
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetAllAuthors500Example:
+                  summary: Default getAllAuthors 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /author/{author_id}:
+    get:
+      operationId: getAuthorById
+      summary: Tronald Dump Get Author by ID
+      description: Returns a specific author record by unique identifier.
+      tags:
+      - Authors
+      parameters:
+      - name: author_id
+        in: path
+        description: The unique identifier of the author.
+        required: true
+        schema:
+          type: string
+        example: 86xX9JdJSlqIo86xJoiqAA
+      responses:
+        '200':
+          description: Author returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Author'
+              examples:
+                GetAuthorById200Example:
+                  summary: Default getAuthorById 200 response
+                  x-microcks-default: true
+                  value:
+                    author_id: 86xX9JdJSlqIo86xJoiqAA
+                    name: Donald Trump
+                    slug: donald-trump
+                    bio: 45th and 47th President of the United States.
+                    _links:
+                      self:
+                        href: /author/86xX9JdJSlqIo86xJoiqAA
+        '404':
+          description: Author not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetAuthorById404Example:
+                  summary: Default getAuthorById 404 response
+                  x-microcks-default: true
+                  value:
+                    status: 404
+                    message: Author not found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetAuthorById500Example:
+                  summary: Default getAuthorById 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
+    AuthorListResponse:
+      type: object
+      description: HAL response wrapper for the author listing.
+      properties:
+        count:
+          type: integer
+          description: Number of authors returned on this page.
+          example: 1
+        total:
+          type: integer
+          description: Total number of authors in the system.
+          example: 1
+        _embedded:
+          type: object
+          properties:
+            authors:
+              type: array
+              items:
+                $ref: '#/components/schemas/Author'
+        _links:
+          type: object
+          description: HAL pagination links.
+          additionalProperties: true
+    Author:
+      type: object
+      description: An author record (e.g. Donald Trump) attached to one or more quotes.
+      properties:
+        author_id:
+          type: string
+          description: Unique URL-safe identifier for the author.
+          example: 86xX9JdJSlqIo86xJoiqAA
+        name:
+          type: string
+          description: Display name of the author.
+          example: Donald Trump
+        slug:
+          type: string
+          description: URL-friendly slug for the author.
+          example: donald-trump
+        bio:
+          type: string
+          description: Short biography of the author.
+          example: 45th and 47th President of the United States.
+        _links:
+          type: object
+          description: HAL hypermedia links related to the author.
+          additionalProperties: true
+externalDocs:
+  description: Original Tronald Dump Documentation (historical)
+  url: https://www.tronalddump.io/

@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+  title: Tronald Dump Quotes Authors Sources API
+  description: Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface. Responses follow HAL (Hypertext Application Language) JSON conventions with `_links` and `_embedded` sections for hypermedia navigation. The API supports random quote retrieval, quote lookup by ID, full text search with pagination, tag browsing, author lookup, and source lookup. No authentication is required. The original public service ran at api.tronalddump.io and has gone offline since 2023; this spec is preserved for community SDKs, archival mirrors, and historical reconstruction.
+  version: 1.0.0
+  contact:
+    name: Marcel Wijnker (Original Author)
+    url: https://github.com/wickedest
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  x-generated-from: documentation
+  x-last-validated: '2026-05-30'
+  x-api-status: offline-historical
+servers:
+- url: https://api.tronalddump.io
+  description: Tronald Dump Production (historical, offline since 2023)
+tags:
+- name: Sources
+  description: Look up the source documents (tweets, transcripts, articles) attached to quotes.
+paths:
+  /source:
+    get:
+      operationId: getAllSources
+      summary: Tronald Dump Get All Sources
+      description: Returns the list of all source documents (tweets, transcripts, articles) attached to quotes in the corpus.
+      tags:
+      - Sources
+      responses:
+        '200':
+          description: Source list returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/SourceListResponse'
+              examples:
+                GetAllSources200Example:
+                  summary: Default getAllSources 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 1
+                    total: 1
+                    _embedded:
+                      sources:
+                      - source_id: 2u3o8DcvSluqZ27WtmlGCw
+                        url: https://twitter.com/realDonaldTrump/status/780494805192454144
+                        filename: 780494805192454144.txt
+                        created_at: '2017-02-15T16:13:32.456Z'
+                        updated_at: '2017-02-15T16:13:32.456Z'
+                        _links:
+                          self:
+                            href: /source/2u3o8DcvSluqZ27WtmlGCw
+                    _links:
+                      self:
+                        href: /source
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetAllSources500Example:
+                  summary: Default getAllSources 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /source/{source_id}:
+    get:
+      operationId: getSourceById
+      summary: Tronald Dump Get Source by ID
+      description: Returns a specific source record by unique identifier.
+      tags:
+      - Sources
+      parameters:
+      - name: source_id
+        in: path
+        description: The unique identifier of the source.
+        required: true
+        schema:
+          type: string
+        example: 2u3o8DcvSluqZ27WtmlGCw
+      responses:
+        '200':
+          description: Source returned successfully.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Source'
+              examples:
+                GetSourceById200Example:
+                  summary: Default getSourceById 200 response
+                  x-microcks-default: true
+                  value:
+                    source_id: 2u3o8DcvSluqZ27WtmlGCw
+                    url: https://twitter.com/realDonaldTrump/status/780494805192454144
+                    filename: 780494805192454144.txt
+                    created_at: '2017-02-15T16:13:32.456Z'
+                    updated_at: '2017-02-15T16:13:32.456Z'
+                    _links:
+                      self:
+                        href: /source/2u3o8DcvSluqZ27WtmlGCw
+        '404':
+          description: Source not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetSourceById404Example:
+                  summary: Default getSourceById 404 response
+                  x-microcks-default: true
+                  value:
+                    status: 404
+                    message: Source not found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                GetSourceById500Example:
+                  summary: Default getSourceById 500 response
+                  x-microcks-default: true
+                  value:
+                    status: 500
+                    message: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    SourceListResponse:
+      type: object
+      description: HAL response wrapper for the source document listing.
+      properties:
+        count:
+          type: integer
+          description: Number of sources returned on this page.
+          example: 1
+        total:
+          type: integer
+          description: Total number of sources in the system.
+          example: 1
+        _embedded:
+          type: object
+          properties:
+            sources:
+              type: array
+              items:
+                $ref: '#/components/schemas/Source'
+        _links:
+          type: object
+          description: HAL pagination links.
+          additionalProperties: true
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
+    Source:
+      type: object
+      description: A source document (tweet, transcript, article) underpinning a quote.
+      properties:
+        source_id:
+          type: string
+          description: Unique URL-safe identifier for the source.
+          example: 2u3o8DcvSluqZ27WtmlGCw
+        url:
+          type: string
+          format: uri
+          description: Canonical URL of the source document.
+          example: https://twitter.com/realDonaldTrump/status/780494805192454144
+        filename:
+          type: string
+          description: Filename of the archived source on disk.
+          example: 780494805192454144.txt
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the source was created.
+          example: '2017-02-15T16:13:32.456Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the source was last updated.
+          example: '2017-02-15T16:13:32.456Z'
+        _links:
+          type: object
+          description: HAL hypermedia links related to the source.
+          additionalProperties: true
+externalDocs:
+  description: Original Tronald Dump Documentation (historical)
+  url: https://www.tronalddump.io/
