@@ -5,6 +5,17 @@ description: >-
   authors, tags, and a search interface using HAL (Hypertext Application Language) JSON responses. The project was built
   by Marcel Wijnker (wickedest) and ran at tronalddump.io until the domain lapsed and the public service went offline;
   the data model, OpenAPI, and community SDKs survive in third-party repositories.
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
 image: https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/main/apis.yml
 url: https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/main/apis.yml
 created: '2026-05-28'
@@ -29,30 +40,54 @@ tags:
   - Quotes
   - Trump
 apis:
-  - aid: tronald-dump:quotes-api
-    name: Tronald Dump Quotes API
-    description: >-
-      REST API returning Donald Trump quotes with metadata, tags, authors, and sources, using HAL JSON responses with
-      _links and _embedded sections for hypermedia navigation. Includes random quote retrieval, quote-by-id lookup, full
-      text search with pagination, tag browsing, author lookup, and source lookup.
-    humanURL: https://www.tronalddump.io/
-    baseURL: https://api.tronalddump.io
-    tags:
-      - Authors
-      - HAL
-      - Hypermedia
-      - Quotes
-      - Search
-      - Sources
-      - Tags
-    properties:
-      - type: Documentation
-        url: https://www.tronalddump.io/
-      - type: OpenAPI
-        url: openapi/tronald-dump-quotes-openapi.yml
-    contact:
-      - FN: Marcel Wijnker
-        url: https://github.com/wickedest
+- aid: tronald-dump:tronald-dump-authors-api
+  name: Tronald Dump Authors API
+  description: Look up the author records attached to quotes.
+  humanURL: https://www.tronalddump.io/
+  baseURL: https://api.tronalddump.io
+  tags:
+  - Authors
+  properties:
+  - type: OpenAPI
+    url: openapi/tronald-dump-authors-api-openapi.yml
+  - type: Documentation
+    url: https://www.tronalddump.io/
+- aid: tronald-dump:tronald-dump-quotes-api
+  name: Tronald Dump Quotes API
+  description: Retrieve Donald Trump quotes individually, randomly, or via full text search.
+  humanURL: https://www.tronalddump.io/
+  baseURL: https://api.tronalddump.io
+  tags:
+  - Quotes
+  properties:
+  - type: OpenAPI
+    url: openapi/tronald-dump-quotes-api-openapi.yml
+  - type: Documentation
+    url: https://www.tronalddump.io/
+- aid: tronald-dump:tronald-dump-sources-api
+  name: Tronald Dump Sources API
+  description: Look up the source documents (tweets, transcripts, articles) attached to quotes.
+  humanURL: https://www.tronalddump.io/
+  baseURL: https://api.tronalddump.io
+  tags:
+  - Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/tronald-dump-sources-api-openapi.yml
+  - type: Documentation
+    url: https://www.tronalddump.io/
+- aid: tronald-dump:tronald-dump-tags-api
+  name: Tronald Dump Tags API
+  description: Browse the controlled vocabulary of tags attached to quotes.
+  humanURL: https://www.tronalddump.io/
+  baseURL: https://api.tronalddump.io
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/tronald-dump-tags-api-openapi.yml
+  - type: Documentation
+    url: https://www.tronalddump.io/
 common:
   - type: AgenticAccess
     url: agentic-access/tronald-dump-agentic-access.yml
