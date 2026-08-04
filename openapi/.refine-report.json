@@ -1,0 +1,20 @@
+{
+  "provider": "tronald-dump",
+  "sources": [
+    "tronald-dump-authors-api-openapi.yml",
+    "tronald-dump-quotes-api-openapi.yml",
+    "tronald-dump-sources-api-openapi.yml",
+    "tronald-dump-tags-api-openapi.yml"
+  ],
+  "outputs": [
+    "tronald-dump-authors-api-openapi.yml",
+    "tronald-dump-quotes-api-openapi.yml",
+    "tronald-dump-sources-api-openapi.yml",
+    "tronald-dump-tags-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
