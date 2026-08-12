@@ -89,6 +89,9 @@ apis:
   - type: Documentation
     url: https://www.tronalddump.io/
 common:
+  - type: License
+    name: GPL-3.0
+    url: https://github.com/tronalddump-io/client-nodejs/blob/master/LICENSE
   - type: AgenticAccess
     url: agentic-access/tronald-dump-agentic-access.yml
   - type: DomainSecurity
