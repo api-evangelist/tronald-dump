@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tronald Dump Quotes Authors Tags API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Tronald Dump Get All Tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/tag"
+          },
+          "docs": "Returns the controlled vocabulary of all tags that exist across the quote corpus."
+        },
+        {
+          "info": {
+            "name": "Tronald Dump Get Quotes by Tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/tag/:tag_value",
+            "params": [
+              {
+                "name": "tag_value",
+                "value": "Wall",
+                "type": "path",
+                "description": "The exact tag value to filter quotes by."
+              },
+              {
+                "name": "page",
+                "value": "0",
+                "type": "query",
+                "description": "Zero-indexed page number for pagination."
+              },
+              {
+                "name": "size",
+                "value": "25",
+                "type": "query",
+                "description": "Number of results returned per page."
+              }
+            ]
+          },
+          "docs": "Returns the set of Donald Trump quotes associated with a specific tag value, with HAL pagination metadata."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

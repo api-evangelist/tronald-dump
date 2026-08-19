@@ -1,0 +1,353 @@
+{
+  "item": [
+    {
+      "id": "93d460ff-bfef-4e02-9b1e-cdbd959276f1",
+      "name": "Tags",
+      "description": {
+        "content": "Browse the controlled vocabulary of tags attached to quotes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "85eb9121-acbc-4902-a373-2e3f6c196bd7",
+          "name": "Tronald Dump Get All Tags",
+          "request": {
+            "name": "Tronald Dump Get All Tags",
+            "description": {
+              "content": "Returns the controlled vocabulary of all tags that exist across the quote corpus.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tag"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6f136a41-aac7-41da-bdcf-0dc6773ff280",
+              "name": "Tag list returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tag"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"count\": 3,\n  \"total\": 3,\n  \"_embedded\": {\n    \"tags\": [\n      {\n        \"value\": \"Wall\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/tag/Wall\"\n          }\n        }\n      },\n      {\n        \"value\": \"Mexico\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/tag/Mexico\"\n          }\n        }\n      },\n      {\n        \"value\": \"China\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/tag/China\"\n          }\n        }\n      }\n    ]\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/tag\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b1bd554-3e40-4555-a0fb-283fd35614b0",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tag"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48ee5eb0-adb1-4b18-b3b9-b87bb99d757d",
+          "name": "Tronald Dump Get Quotes by Tag",
+          "request": {
+            "name": "Tronald Dump Get Quotes by Tag",
+            "description": {
+              "content": "Returns the set of Donald Trump quotes associated with a specific tag value, with HAL pagination metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tag",
+                ":tag_value"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Zero-indexed page number for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "25",
+                  "description": "Number of results returned per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tag_value",
+                  "description": "(Required) The exact tag value to filter quotes by."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e35d755f-c9f9-49a5-8093-49989d7ffda7",
+              "name": "Tag matched and quotes returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tag",
+                    ":tag_value"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tag_value",
+                      "description": "(Required) The exact tag value to filter quotes by."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"count\": 1,\n  \"total\": 1,\n  \"_embedded\": {\n    \"quotes\": [\n      {\n        \"appeared_at\": \"2016-09-26T00:00:00.000Z\",\n        \"created_at\": \"2017-02-15T16:13:32.456Z\",\n        \"quote_id\": \"GYDdK40iSrSiyVAm2J_TKQ\",\n        \"tags\": [\n          \"Wall\"\n        ],\n        \"value\": \"I will build a great wall.\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/quote/GYDdK40iSrSiyVAm2J_TKQ\"\n          }\n        }\n      }\n    ]\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/tag/Wall\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "989bfc36-a7d2-4ea9-b808-43bbe8e63068",
+              "name": "Tag not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tag",
+                    ":tag_value"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tag_value",
+                      "description": "(Required) The exact tag value to filter quotes by."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"message\": \"Tag not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "796623a8-0013-495b-8c6b-f1fc305c6a03",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tag",
+                    ":tag_value"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tag_value",
+                      "description": "(Required) The exact tag value to filter quotes by."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tronalddump.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "423114cd-989b-4ee2-b241-bacc59941687",
+    "name": "Tronald Dump Quotes Authors Tags API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface. Responses follow HAL (Hypertext Application Language) JSON conventions with `_links` and `_embedded` sections for hypermedia navigation. The API supports random quote retrieval, quote lookup by ID, full text search with pagination, tag browsing, author lookup, and source lookup. No authentication is required. The original public service ran at api.tronalddump.io and has gone offline since 2023; this spec is preserved for community SDKs, archival mirrors, and historical reconstruction.\n\nContact Support:\n Name: Marcel Wijnker (Original Author)",
+      "type": "text/plain"
+    }
+  }
+}

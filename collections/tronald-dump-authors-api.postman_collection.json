@@ -1,0 +1,313 @@
+{
+  "item": [
+    {
+      "id": "fb28c989-ef87-4416-9d69-6b5311c523ab",
+      "name": "Authors",
+      "description": {
+        "content": "Look up the author records attached to quotes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6064aeb2-12e9-4121-a7bc-9254b2de1ef9",
+          "name": "Tronald Dump Get All Authors",
+          "request": {
+            "name": "Tronald Dump Get All Authors",
+            "description": {
+              "content": "Returns the list of all author records tracked in the corpus.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "author"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e5ee8803-2683-44f7-a62d-5533906ee6d1",
+              "name": "Author list returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "author"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"count\": 1,\n  \"total\": 1,\n  \"_embedded\": {\n    \"authors\": [\n      {\n        \"author_id\": \"86xX9JdJSlqIo86xJoiqAA\",\n        \"name\": \"Donald Trump\",\n        \"slug\": \"donald-trump\",\n        \"bio\": \"45th and 47th President of the United States.\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"/author/86xX9JdJSlqIo86xJoiqAA\"\n          }\n        }\n      }\n    ]\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/author\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a65b0556-18a2-4f64-b56b-a758c30ab7b3",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "author"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a66ba6a6-1f60-499e-9545-85828a1a8be5",
+          "name": "Tronald Dump Get Author by ID",
+          "request": {
+            "name": "Tronald Dump Get Author by ID",
+            "description": {
+              "content": "Returns a specific author record by unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "author",
+                ":author_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "author_id",
+                  "description": "(Required) The unique identifier of the author."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/hal+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "796de029-60d2-4556-9d36-6ab4a31e1d2b",
+              "name": "Author returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "author",
+                    ":author_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "author_id",
+                      "description": "(Required) The unique identifier of the author."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/hal+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/hal+json"
+                }
+              ],
+              "body": "{\n  \"author_id\": \"86xX9JdJSlqIo86xJoiqAA\",\n  \"name\": \"Donald Trump\",\n  \"slug\": \"donald-trump\",\n  \"bio\": \"45th and 47th President of the United States.\",\n  \"_links\": {\n    \"self\": {\n      \"href\": \"/author/86xX9JdJSlqIo86xJoiqAA\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0be1e8eb-8f43-4ef4-8596-8e2a839d2e51",
+              "name": "Author not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "author",
+                    ":author_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "author_id",
+                      "description": "(Required) The unique identifier of the author."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 404,\n  \"message\": \"Author not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c5a11f1-2b3c-44b8-84d8-ddc10f27aaa3",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "author",
+                    ":author_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "author_id",
+                      "description": "(Required) The unique identifier of the author."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tronalddump.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "27b3be95-2968-4232-b2cd-a097d8dae2b4",
+    "name": "Tronald Dump Quotes Authors API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface. Responses follow HAL (Hypertext Application Language) JSON conventions with `_links` and `_embedded` sections for hypermedia navigation. The API supports random quote retrieval, quote lookup by ID, full text search with pagination, tag browsing, author lookup, and source lookup. No authentication is required. The original public service ran at api.tronalddump.io and has gone offline since 2023; this spec is preserved for community SDKs, archival mirrors, and historical reconstruction.\n\nContact Support:\n Name: Marcel Wijnker (Original Author)",
+      "type": "text/plain"
+    }
+  }
+}

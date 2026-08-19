@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tronald Dump Quotes Authors Sources API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Tronald Dump Get All Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/source"
+          },
+          "docs": "Returns the list of all source documents (tweets, transcripts, articles) attached to quotes in the corpus."
+        },
+        {
+          "info": {
+            "name": "Tronald Dump Get Source by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/source/:source_id",
+            "params": [
+              {
+                "name": "source_id",
+                "value": "2u3o8DcvSluqZ27WtmlGCw",
+                "type": "path",
+                "description": "The unique identifier of the source."
+              }
+            ]
+          },
+          "docs": "Returns a specific source record by unique identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

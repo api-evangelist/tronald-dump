@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tronald Dump Quotes Authors API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Tronald Dump Get All Authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/author"
+          },
+          "docs": "Returns the list of all author records tracked in the corpus."
+        },
+        {
+          "info": {
+            "name": "Tronald Dump Get Author by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tronalddump.io/author/:author_id",
+            "params": [
+              {
+                "name": "author_id",
+                "value": "86xX9JdJSlqIo86xJoiqAA",
+                "type": "path",
+                "description": "The unique identifier of the author."
+              }
+            ]
+          },
+          "docs": "Returns a specific author record by unique identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
