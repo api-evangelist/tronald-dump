@@ -20,7 +20,7 @@ image: https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/
 url: https://raw.githubusercontent.com/api-evangelist/tronald-dump/refs/heads/main/apis.yml
 created: '2026-05-28'
 modified: '2026-05-30'
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 x-source: public-apis/public-apis
 x-category: Games & Comics
 x-type: opensource
