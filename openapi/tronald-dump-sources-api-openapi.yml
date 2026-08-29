@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Tronald Dump Quotes Authors Sources API
   description: Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface. Responses follow HAL (Hypertext Application Language) JSON conventions with `_links` and `_embedded` sections for hypermedia navigation. The API supports random quote retrieval, quote lookup by ID, full text search with pagination, tag browsing, author lookup, and source lookup. No authentication is required. The original public service ran at api.tronalddump.io and has gone offline since 2023; this spec is preserved for community SDKs, archival mirrors, and historical reconstruction.
@@ -158,18 +158,6 @@ components:
           type: object
           description: HAL pagination links.
           additionalProperties: true
-    Error:
-      type: object
-      description: Standard error response envelope.
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
-        message:
-          type: string
-          description: Human-readable error message.
-          example: Quote not found
     Source:
       type: object
       description: A source document (tweet, transcript, article) underpinning a quote.
@@ -201,6 +189,18 @@ components:
           type: object
           description: HAL hypermedia links related to the source.
           additionalProperties: true
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
 externalDocs:
   description: Original Tronald Dump Documentation (historical)
   url: https://www.tronalddump.io/

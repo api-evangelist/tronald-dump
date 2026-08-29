@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Tronald Dump Authors Quotes API
   description: Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface. Responses follow HAL (Hypertext Application Language) JSON conventions with `_links` and `_embedded` sections for hypermedia navigation. The API supports random quote retrieval, quote lookup by ID, full text search with pagination, tag browsing, author lookup, and source lookup. No authentication is required. The original public service ran at api.tronalddump.io and has gone offline since 2023; this spec is preserved for community SDKs, archival mirrors, and historical reconstruction.
@@ -262,6 +262,37 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    Source:
+      type: object
+      description: A source document (tweet, transcript, article) underpinning a quote.
+      properties:
+        source_id:
+          type: string
+          description: Unique URL-safe identifier for the source.
+          example: 2u3o8DcvSluqZ27WtmlGCw
+        url:
+          type: string
+          format: uri
+          description: Canonical URL of the source document.
+          example: https://twitter.com/realDonaldTrump/status/780494805192454144
+        filename:
+          type: string
+          description: Filename of the archived source on disk.
+          example: 780494805192454144.txt
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the source was created.
+          example: '2017-02-15T16:13:32.456Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the source was last updated.
+          example: '2017-02-15T16:13:32.456Z'
+        _links:
+          type: object
+          description: HAL hypermedia links related to the source.
+          additionalProperties: true
     QuoteSearchResponse:
       type: object
       description: HAL response wrapper for paginated quote search and tag results.
@@ -320,37 +351,6 @@ components:
         _links:
           type: object
           description: HAL hypermedia links related to the author.
-          additionalProperties: true
-    Source:
-      type: object
-      description: A source document (tweet, transcript, article) underpinning a quote.
-      properties:
-        source_id:
-          type: string
-          description: Unique URL-safe identifier for the source.
-          example: 2u3o8DcvSluqZ27WtmlGCw
-        url:
-          type: string
-          format: uri
-          description: Canonical URL of the source document.
-          example: https://twitter.com/realDonaldTrump/status/780494805192454144
-        filename:
-          type: string
-          description: Filename of the archived source on disk.
-          example: 780494805192454144.txt
-        created_at:
-          type: string
-          format: date-time
-          description: The date and time the source was created.
-          example: '2017-02-15T16:13:32.456Z'
-        updated_at:
-          type: string
-          format: date-time
-          description: The date and time the source was last updated.
-          example: '2017-02-15T16:13:32.456Z'
-        _links:
-          type: object
-          description: HAL hypermedia links related to the source.
           additionalProperties: true
     Quote:
       type: object

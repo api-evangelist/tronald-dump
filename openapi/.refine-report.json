@@ -15,6 +15,12 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "tronald-dump-authors-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tronald-dump-quotes-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tronald-dump-sources-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tronald-dump-tags-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

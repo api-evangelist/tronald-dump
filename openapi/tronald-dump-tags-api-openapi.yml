@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Tronald Dump Quotes Authors Tags API
   description: Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface. Responses follow HAL (Hypertext Application Language) JSON conventions with `_links` and `_embedded` sections for hypermedia navigation. The API supports random quote retrieval, quote lookup by ID, full text search with pagination, tag browsing, author lookup, and source lookup. No authentication is required. The original public service ran at api.tronalddump.io and has gone offline since 2023; this spec is preserved for community SDKs, archival mirrors, and historical reconstruction.
@@ -166,28 +166,28 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    QuoteSearchResponse:
+    TagListResponse:
       type: object
-      description: HAL response wrapper for paginated quote search and tag results.
+      description: HAL response wrapper for the tag vocabulary listing.
       properties:
         count:
           type: integer
-          description: Number of quotes returned on this page.
-          example: 2
+          description: Number of tags returned on this page.
+          example: 3
         total:
           type: integer
-          description: Total number of quotes matching the query across all pages.
-          example: 2
+          description: Total number of tags in the vocabulary.
+          example: 3
         _embedded:
           type: object
           properties:
-            quotes:
+            tags:
               type: array
               items:
-                $ref: '#/components/schemas/Quote'
+                $ref: '#/components/schemas/Tag'
         _links:
           type: object
-          description: HAL pagination links (self, next, prev).
+          description: HAL pagination links.
           additionalProperties: true
     Tag:
       type: object
@@ -201,18 +201,6 @@ components:
           type: object
           description: HAL hypermedia links related to the tag.
           additionalProperties: true
-    Error:
-      type: object
-      description: Standard error response envelope.
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
-        message:
-          type: string
-          description: Human-readable error message.
-          example: Quote not found
     Source:
       type: object
       description: A source document (tweet, transcript, article) underpinning a quote.
@@ -244,6 +232,41 @@ components:
           type: object
           description: HAL hypermedia links related to the source.
           additionalProperties: true
+    QuoteSearchResponse:
+      type: object
+      description: HAL response wrapper for paginated quote search and tag results.
+      properties:
+        count:
+          type: integer
+          description: Number of quotes returned on this page.
+          example: 2
+        total:
+          type: integer
+          description: Total number of quotes matching the query across all pages.
+          example: 2
+        _embedded:
+          type: object
+          properties:
+            quotes:
+              type: array
+              items:
+                $ref: '#/components/schemas/Quote'
+        _links:
+          type: object
+          description: HAL pagination links (self, next, prev).
+          additionalProperties: true
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
     Author:
       type: object
       description: An author record (e.g. Donald Trump) attached to one or more quotes.
@@ -319,29 +342,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Source'
-    TagListResponse:
-      type: object
-      description: HAL response wrapper for the tag vocabulary listing.
-      properties:
-        count:
-          type: integer
-          description: Number of tags returned on this page.
-          example: 3
-        total:
-          type: integer
-          description: Total number of tags in the vocabulary.
-          example: 3
-        _embedded:
-          type: object
-          properties:
-            tags:
-              type: array
-              items:
-                $ref: '#/components/schemas/Tag'
-        _links:
-          type: object
-          description: HAL pagination links.
-          additionalProperties: true
 externalDocs:
   description: Original Tronald Dump Documentation (historical)
   url: https://www.tronalddump.io/
