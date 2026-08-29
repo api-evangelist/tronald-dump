@@ -5,6 +5,19 @@ description: >-
   authors, tags, and a search interface using HAL (Hypertext Application Language) JSON responses. The project was built
   by Marcel Wijnker (wickedest) and ran at tronalddump.io until the domain lapsed and the public service went offline;
   the data model, OpenAPI, and community SDKs survive in third-party repositories.
+deliveryModel:
+  model: self-hosted
+  license: GPL-3.0
+  open_source: true
+  commercial: false
+  callable_host: false
+  label: Self-hosted open source · you run it yourself
+  confidence: high
+  source:
+  - license
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: unknown
@@ -97,6 +110,8 @@ apis:
   - type: Documentation
     url: https://www.tronalddump.io/
 common:
+  - type: IssueTracker
+    url: https://github.com/tronalddump-io/client-nodejs/issues
   - type: License
     name: GPL-3.0
     url: https://github.com/tronalddump-io/client-nodejs/blob/master/LICENSE
