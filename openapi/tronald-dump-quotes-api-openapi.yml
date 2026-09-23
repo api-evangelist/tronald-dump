@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Tronald Dump Authors Quotes API
-  description: Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface. Responses follow HAL (Hypertext Application Language) JSON conventions with `_links` and `_embedded` sections for hypermedia navigation. The API supports random quote retrieval, quote lookup by ID, full text search with pagination, tag browsing, author lookup, and source lookup. No authentication is required. The original public service ran at api.tronalddump.io and has gone offline since 2023; this spec is preserved for community SDKs, archival mirrors, and historical reconstruction.
+  title: Tronald Dump Quotes API
+  description: Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface.
   version: 1.0.0
   contact:
     name: Marcel Wijnker (Original Author)
@@ -262,6 +262,81 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    Quote:
+      type: object
+      description: A single Donald Trump quote with HAL hypermedia metadata.
+      properties:
+        appeared_at:
+          type: string
+          format: date-time
+          description: The date and time the quote first appeared in the source.
+          example: '2016-09-26T00:00:00.000Z'
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the quote was created in the system.
+          example: '2017-02-15T16:13:32.456Z'
+        quote_id:
+          type: string
+          description: Unique URL-safe identifier for the quote.
+          example: GYDdK40iSrSiyVAm2J_TKQ
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tag values associated with the quote.
+          example:
+          - Mexico
+          - Wall
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the quote was last updated.
+          example: '2017-02-15T16:13:32.456Z'
+        value:
+          type: string
+          description: The actual quote text.
+          example: I will build a great wall.
+        _links:
+          type: object
+          description: HAL hypermedia links related to the quote (self, etc.).
+          additionalProperties: true
+        _embedded:
+          type: object
+          description: HAL embedded resources for the quote (author, source).
+          properties:
+            author:
+              type: array
+              items:
+                $ref: '#/components/schemas/Author'
+            source:
+              type: array
+              items:
+                $ref: '#/components/schemas/Source'
+    Author:
+      type: object
+      description: An author record (e.g. Donald Trump) attached to one or more quotes.
+      properties:
+        author_id:
+          type: string
+          description: Unique URL-safe identifier for the author.
+          example: 86xX9JdJSlqIo86xJoiqAA
+        name:
+          type: string
+          description: Display name of the author.
+          example: Donald Trump
+        slug:
+          type: string
+          description: URL-friendly slug for the author.
+          example: donald-trump
+        bio:
+          type: string
+          description: Short biography of the author.
+          example: 45th and 47th President of the United States.
+        _links:
+          type: object
+          description: HAL hypermedia links related to the author.
+          additionalProperties: true
     Source:
       type: object
       description: A source document (tweet, transcript, article) underpinning a quote.
@@ -328,81 +403,6 @@ components:
           type: string
           description: Human-readable error message.
           example: Quote not found
-    Author:
-      type: object
-      description: An author record (e.g. Donald Trump) attached to one or more quotes.
-      properties:
-        author_id:
-          type: string
-          description: Unique URL-safe identifier for the author.
-          example: 86xX9JdJSlqIo86xJoiqAA
-        name:
-          type: string
-          description: Display name of the author.
-          example: Donald Trump
-        slug:
-          type: string
-          description: URL-friendly slug for the author.
-          example: donald-trump
-        bio:
-          type: string
-          description: Short biography of the author.
-          example: 45th and 47th President of the United States.
-        _links:
-          type: object
-          description: HAL hypermedia links related to the author.
-          additionalProperties: true
-    Quote:
-      type: object
-      description: A single Donald Trump quote with HAL hypermedia metadata.
-      properties:
-        appeared_at:
-          type: string
-          format: date-time
-          description: The date and time the quote first appeared in the source.
-          example: '2016-09-26T00:00:00.000Z'
-        created_at:
-          type: string
-          format: date-time
-          description: The date and time the quote was created in the system.
-          example: '2017-02-15T16:13:32.456Z'
-        quote_id:
-          type: string
-          description: Unique URL-safe identifier for the quote.
-          example: GYDdK40iSrSiyVAm2J_TKQ
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tag values associated with the quote.
-          example:
-          - Mexico
-          - Wall
-        updated_at:
-          type: string
-          format: date-time
-          description: The date and time the quote was last updated.
-          example: '2017-02-15T16:13:32.456Z'
-        value:
-          type: string
-          description: The actual quote text.
-          example: I will build a great wall.
-        _links:
-          type: object
-          description: HAL hypermedia links related to the quote (self, etc.).
-          additionalProperties: true
-        _embedded:
-          type: object
-          description: HAL embedded resources for the quote (author, source).
-          properties:
-            author:
-              type: array
-              items:
-                $ref: '#/components/schemas/Author'
-            source:
-              type: array
-              items:
-                $ref: '#/components/schemas/Source'
 externalDocs:
   description: Original Tronald Dump Documentation (historical)
   url: https://www.tronalddump.io/

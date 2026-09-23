@@ -1,10 +1,7 @@
 {
   "provider": "tronald-dump",
   "sources": [
-    "tronald-dump-authors-api-openapi.yml",
-    "tronald-dump-quotes-api-openapi.yml",
-    "tronald-dump-sources-api-openapi.yml",
-    "tronald-dump-tags-api-openapi.yml"
+    "_ae-authored/tronald-dump-quotes-openapi.yml"
   ],
   "outputs": [
     "tronald-dump-authors-api-openapi.yml",
@@ -16,11 +13,14 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "tronald-dump-authors-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "tronald-dump-quotes-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "tronald-dump-sources-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "tronald-dump-tags-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "tronald-dump-quotes-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "tronald-dump-authors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tronald-dump-quotes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tronald-dump-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tronald-dump-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

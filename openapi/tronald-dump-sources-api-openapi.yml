@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Tronald Dump Quotes Authors Sources API
-  description: Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface. Responses follow HAL (Hypertext Application Language) JSON conventions with `_links` and `_embedded` sections for hypermedia navigation. The API supports random quote retrieval, quote lookup by ID, full text search with pagination, tag browsing, author lookup, and source lookup. No authentication is required. The original public service ran at api.tronalddump.io and has gone offline since 2023; this spec is preserved for community SDKs, archival mirrors, and historical reconstruction.
+  title: Tronald Dump Quotes Sources API
+  description: Tronald Dump is an open community REST API exposing a historical archive of Donald Trump quotes with sources, authors, tags, and a search interface.
   version: 1.0.0
   contact:
     name: Marcel Wijnker (Original Author)
@@ -135,29 +135,18 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    SourceListResponse:
+    Error:
       type: object
-      description: HAL response wrapper for the source document listing.
+      description: Standard error response envelope.
       properties:
-        count:
+        status:
           type: integer
-          description: Number of sources returned on this page.
-          example: 1
-        total:
-          type: integer
-          description: Total number of sources in the system.
-          example: 1
-        _embedded:
-          type: object
-          properties:
-            sources:
-              type: array
-              items:
-                $ref: '#/components/schemas/Source'
-        _links:
-          type: object
-          description: HAL pagination links.
-          additionalProperties: true
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
     Source:
       type: object
       description: A source document (tweet, transcript, article) underpinning a quote.
@@ -189,18 +178,29 @@ components:
           type: object
           description: HAL hypermedia links related to the source.
           additionalProperties: true
-    Error:
+    SourceListResponse:
       type: object
-      description: Standard error response envelope.
+      description: HAL response wrapper for the source document listing.
       properties:
-        status:
+        count:
           type: integer
-          description: HTTP status code.
-          example: 404
-        message:
-          type: string
-          description: Human-readable error message.
-          example: Quote not found
+          description: Number of sources returned on this page.
+          example: 1
+        total:
+          type: integer
+          description: Total number of sources in the system.
+          example: 1
+        _embedded:
+          type: object
+          properties:
+            sources:
+              type: array
+              items:
+                $ref: '#/components/schemas/Source'
+        _links:
+          type: object
+          description: HAL pagination links.
+          additionalProperties: true
 externalDocs:
   description: Original Tronald Dump Documentation (historical)
   url: https://www.tronalddump.io/
