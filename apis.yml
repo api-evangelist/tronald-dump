@@ -47,7 +47,7 @@ x-status-note: >-
 tags:
   - Community
   - Games And Comics
-  - Open-Source
+  - Open Source
   - Politics
   - Public APIs
   - Quotes
@@ -60,6 +60,7 @@ tags_raw:
   - Public APIs
   - Quotes
   - Trump
+  - Open-Source
 apis:
 - aid: tronald-dump:tronald-dump-authors-api
   name: Tronald Dump Authors API

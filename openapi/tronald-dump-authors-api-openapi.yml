@@ -157,6 +157,18 @@ components:
           type: object
           description: HAL hypermedia links related to the author.
           additionalProperties: true
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
     AuthorListResponse:
       type: object
       description: HAL response wrapper for the author listing.
@@ -180,18 +192,6 @@ components:
           type: object
           description: HAL pagination links.
           additionalProperties: true
-    Error:
-      type: object
-      description: Standard error response envelope.
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
-        message:
-          type: string
-          description: Human-readable error message.
-          example: Quote not found
 externalDocs:
   description: Original Tronald Dump Documentation (historical)
   url: https://www.tronalddump.io/

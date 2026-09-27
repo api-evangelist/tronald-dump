@@ -166,80 +166,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Quote:
-      type: object
-      description: A single Donald Trump quote with HAL hypermedia metadata.
-      properties:
-        appeared_at:
-          type: string
-          format: date-time
-          description: The date and time the quote first appeared in the source.
-          example: '2016-09-26T00:00:00.000Z'
-        created_at:
-          type: string
-          format: date-time
-          description: The date and time the quote was created in the system.
-          example: '2017-02-15T16:13:32.456Z'
-        quote_id:
-          type: string
-          description: Unique URL-safe identifier for the quote.
-          example: GYDdK40iSrSiyVAm2J_TKQ
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tag values associated with the quote.
-          example:
-          - Mexico
-          - Wall
-        updated_at:
-          type: string
-          format: date-time
-          description: The date and time the quote was last updated.
-          example: '2017-02-15T16:13:32.456Z'
-        value:
-          type: string
-          description: The actual quote text.
-          example: I will build a great wall.
-        _links:
-          type: object
-          description: HAL hypermedia links related to the quote (self, etc.).
-          additionalProperties: true
-        _embedded:
-          type: object
-          description: HAL embedded resources for the quote (author, source).
-          properties:
-            author:
-              type: array
-              items:
-                $ref: '#/components/schemas/Author'
-            source:
-              type: array
-              items:
-                $ref: '#/components/schemas/Source'
-    TagListResponse:
-      type: object
-      description: HAL response wrapper for the tag vocabulary listing.
-      properties:
-        count:
-          type: integer
-          description: Number of tags returned on this page.
-          example: 3
-        total:
-          type: integer
-          description: Total number of tags in the vocabulary.
-          example: 3
-        _embedded:
-          type: object
-          properties:
-            tags:
-              type: array
-              items:
-                $ref: '#/components/schemas/Tag'
-        _links:
-          type: object
-          description: HAL pagination links.
-          additionalProperties: true
     Author:
       type: object
       description: An author record (e.g. Donald Trump) attached to one or more quotes.
@@ -295,6 +221,30 @@ components:
           type: object
           description: HAL hypermedia links related to the source.
           additionalProperties: true
+    Tag:
+      type: object
+      description: A tag in the controlled vocabulary applied to quotes.
+      properties:
+        value:
+          type: string
+          description: The tag value string.
+          example: Wall
+        _links:
+          type: object
+          description: HAL hypermedia links related to the tag.
+          additionalProperties: true
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
     QuoteSearchResponse:
       type: object
       description: HAL response wrapper for paginated quote search and tag results.
@@ -318,30 +268,80 @@ components:
           type: object
           description: HAL pagination links (self, next, prev).
           additionalProperties: true
-    Error:
+    TagListResponse:
       type: object
-      description: Standard error response envelope.
+      description: HAL response wrapper for the tag vocabulary listing.
       properties:
-        status:
+        count:
           type: integer
-          description: HTTP status code.
-          example: 404
-        message:
-          type: string
-          description: Human-readable error message.
-          example: Quote not found
-    Tag:
-      type: object
-      description: A tag in the controlled vocabulary applied to quotes.
-      properties:
-        value:
-          type: string
-          description: The tag value string.
-          example: Wall
+          description: Number of tags returned on this page.
+          example: 3
+        total:
+          type: integer
+          description: Total number of tags in the vocabulary.
+          example: 3
+        _embedded:
+          type: object
+          properties:
+            tags:
+              type: array
+              items:
+                $ref: '#/components/schemas/Tag'
         _links:
           type: object
-          description: HAL hypermedia links related to the tag.
+          description: HAL pagination links.
           additionalProperties: true
+    Quote:
+      type: object
+      description: A single Donald Trump quote with HAL hypermedia metadata.
+      properties:
+        appeared_at:
+          type: string
+          format: date-time
+          description: The date and time the quote first appeared in the source.
+          example: '2016-09-26T00:00:00.000Z'
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the quote was created in the system.
+          example: '2017-02-15T16:13:32.456Z'
+        quote_id:
+          type: string
+          description: Unique URL-safe identifier for the quote.
+          example: GYDdK40iSrSiyVAm2J_TKQ
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tag values associated with the quote.
+          example:
+          - Mexico
+          - Wall
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the quote was last updated.
+          example: '2017-02-15T16:13:32.456Z'
+        value:
+          type: string
+          description: The actual quote text.
+          example: I will build a great wall.
+        _links:
+          type: object
+          description: HAL hypermedia links related to the quote (self, etc.).
+          additionalProperties: true
+        _embedded:
+          type: object
+          description: HAL embedded resources for the quote (author, source).
+          properties:
+            author:
+              type: array
+              items:
+                $ref: '#/components/schemas/Author'
+            source:
+              type: array
+              items:
+                $ref: '#/components/schemas/Source'
 externalDocs:
   description: Original Tronald Dump Documentation (historical)
   url: https://www.tronalddump.io/
