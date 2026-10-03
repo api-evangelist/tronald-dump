@@ -317,41 +317,6 @@ components:
           type: object
           description: HAL hypermedia links related to the source.
           additionalProperties: true
-    Error:
-      type: object
-      description: Standard error response envelope.
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
-        message:
-          type: string
-          description: Human-readable error message.
-          example: Quote not found
-    QuoteSearchResponse:
-      type: object
-      description: HAL response wrapper for paginated quote search and tag results.
-      properties:
-        count:
-          type: integer
-          description: Number of quotes returned on this page.
-          example: 2
-        total:
-          type: integer
-          description: Total number of quotes matching the query across all pages.
-          example: 2
-        _embedded:
-          type: object
-          properties:
-            quotes:
-              type: array
-              items:
-                $ref: '#/components/schemas/Quote'
-        _links:
-          type: object
-          description: HAL pagination links (self, next, prev).
-          additionalProperties: true
     Quote:
       type: object
       description: A single Donald Trump quote with HAL hypermedia metadata.
@@ -403,6 +368,41 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Source'
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
+    QuoteSearchResponse:
+      type: object
+      description: HAL response wrapper for paginated quote search and tag results.
+      properties:
+        count:
+          type: integer
+          description: Number of quotes returned on this page.
+          example: 2
+        total:
+          type: integer
+          description: Total number of quotes matching the query across all pages.
+          example: 2
+        _embedded:
+          type: object
+          properties:
+            quotes:
+              type: array
+              items:
+                $ref: '#/components/schemas/Quote'
+        _links:
+          type: object
+          description: HAL pagination links (self, next, prev).
+          additionalProperties: true
 externalDocs:
   description: Original Tronald Dump Documentation (historical)
   url: https://www.tronalddump.io/

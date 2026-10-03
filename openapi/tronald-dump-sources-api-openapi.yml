@@ -147,6 +147,29 @@ components:
           type: string
           description: Human-readable error message.
           example: Quote not found
+    SourceListResponse:
+      type: object
+      description: HAL response wrapper for the source document listing.
+      properties:
+        count:
+          type: integer
+          description: Number of sources returned on this page.
+          example: 1
+        total:
+          type: integer
+          description: Total number of sources in the system.
+          example: 1
+        _embedded:
+          type: object
+          properties:
+            sources:
+              type: array
+              items:
+                $ref: '#/components/schemas/Source'
+        _links:
+          type: object
+          description: HAL pagination links.
+          additionalProperties: true
     Source:
       type: object
       description: A source document (tweet, transcript, article) underpinning a quote.
@@ -177,29 +200,6 @@ components:
         _links:
           type: object
           description: HAL hypermedia links related to the source.
-          additionalProperties: true
-    SourceListResponse:
-      type: object
-      description: HAL response wrapper for the source document listing.
-      properties:
-        count:
-          type: integer
-          description: Number of sources returned on this page.
-          example: 1
-        total:
-          type: integer
-          description: Total number of sources in the system.
-          example: 1
-        _embedded:
-          type: object
-          properties:
-            sources:
-              type: array
-              items:
-                $ref: '#/components/schemas/Source'
-        _links:
-          type: object
-          description: HAL pagination links.
           additionalProperties: true
 externalDocs:
   description: Original Tronald Dump Documentation (historical)
