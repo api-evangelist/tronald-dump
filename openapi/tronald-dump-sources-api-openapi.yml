@@ -135,18 +135,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Error:
-      type: object
-      description: Standard error response envelope.
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
-        message:
-          type: string
-          description: Human-readable error message.
-          example: Quote not found
     SourceListResponse:
       type: object
       description: HAL response wrapper for the source document listing.
@@ -170,6 +158,18 @@ components:
           type: object
           description: HAL pagination links.
           additionalProperties: true
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
     Source:
       type: object
       description: A source document (tweet, transcript, article) underpinning a quote.

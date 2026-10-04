@@ -166,6 +166,53 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    Tag:
+      type: object
+      description: A tag in the controlled vocabulary applied to quotes.
+      properties:
+        value:
+          type: string
+          description: The tag value string.
+          example: Wall
+        _links:
+          type: object
+          description: HAL hypermedia links related to the tag.
+          additionalProperties: true
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
+    QuoteSearchResponse:
+      type: object
+      description: HAL response wrapper for paginated quote search and tag results.
+      properties:
+        count:
+          type: integer
+          description: Number of quotes returned on this page.
+          example: 2
+        total:
+          type: integer
+          description: Total number of quotes matching the query across all pages.
+          example: 2
+        _embedded:
+          type: object
+          properties:
+            quotes:
+              type: array
+              items:
+                $ref: '#/components/schemas/Quote'
+        _links:
+          type: object
+          description: HAL pagination links (self, next, prev).
+          additionalProperties: true
     TagListResponse:
       type: object
       description: HAL response wrapper for the tag vocabulary listing.
@@ -188,30 +235,6 @@ components:
         _links:
           type: object
           description: HAL pagination links.
-          additionalProperties: true
-    Author:
-      type: object
-      description: An author record (e.g. Donald Trump) attached to one or more quotes.
-      properties:
-        author_id:
-          type: string
-          description: Unique URL-safe identifier for the author.
-          example: 86xX9JdJSlqIo86xJoiqAA
-        name:
-          type: string
-          description: Display name of the author.
-          example: Donald Trump
-        slug:
-          type: string
-          description: URL-friendly slug for the author.
-          example: donald-trump
-        bio:
-          type: string
-          description: Short biography of the author.
-          example: 45th and 47th President of the United States.
-        _links:
-          type: object
-          description: HAL hypermedia links related to the author.
           additionalProperties: true
     Source:
       type: object
@@ -244,17 +267,29 @@ components:
           type: object
           description: HAL hypermedia links related to the source.
           additionalProperties: true
-    Tag:
+    Author:
       type: object
-      description: A tag in the controlled vocabulary applied to quotes.
+      description: An author record (e.g. Donald Trump) attached to one or more quotes.
       properties:
-        value:
+        author_id:
           type: string
-          description: The tag value string.
-          example: Wall
+          description: Unique URL-safe identifier for the author.
+          example: 86xX9JdJSlqIo86xJoiqAA
+        name:
+          type: string
+          description: Display name of the author.
+          example: Donald Trump
+        slug:
+          type: string
+          description: URL-friendly slug for the author.
+          example: donald-trump
+        bio:
+          type: string
+          description: Short biography of the author.
+          example: 45th and 47th President of the United States.
         _links:
           type: object
-          description: HAL hypermedia links related to the tag.
+          description: HAL hypermedia links related to the author.
           additionalProperties: true
     Quote:
       type: object
@@ -307,41 +342,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Source'
-    Error:
-      type: object
-      description: Standard error response envelope.
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
-        message:
-          type: string
-          description: Human-readable error message.
-          example: Quote not found
-    QuoteSearchResponse:
-      type: object
-      description: HAL response wrapper for paginated quote search and tag results.
-      properties:
-        count:
-          type: integer
-          description: Number of quotes returned on this page.
-          example: 2
-        total:
-          type: integer
-          description: Total number of quotes matching the query across all pages.
-          example: 2
-        _embedded:
-          type: object
-          properties:
-            quotes:
-              type: array
-              items:
-                $ref: '#/components/schemas/Quote'
-        _links:
-          type: object
-          description: HAL pagination links (self, next, prev).
-          additionalProperties: true
 externalDocs:
   description: Original Tronald Dump Documentation (historical)
   url: https://www.tronalddump.io/

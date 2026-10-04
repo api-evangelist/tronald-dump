@@ -262,61 +262,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Author:
-      type: object
-      description: An author record (e.g. Donald Trump) attached to one or more quotes.
-      properties:
-        author_id:
-          type: string
-          description: Unique URL-safe identifier for the author.
-          example: 86xX9JdJSlqIo86xJoiqAA
-        name:
-          type: string
-          description: Display name of the author.
-          example: Donald Trump
-        slug:
-          type: string
-          description: URL-friendly slug for the author.
-          example: donald-trump
-        bio:
-          type: string
-          description: Short biography of the author.
-          example: 45th and 47th President of the United States.
-        _links:
-          type: object
-          description: HAL hypermedia links related to the author.
-          additionalProperties: true
-    Source:
-      type: object
-      description: A source document (tweet, transcript, article) underpinning a quote.
-      properties:
-        source_id:
-          type: string
-          description: Unique URL-safe identifier for the source.
-          example: 2u3o8DcvSluqZ27WtmlGCw
-        url:
-          type: string
-          format: uri
-          description: Canonical URL of the source document.
-          example: https://twitter.com/realDonaldTrump/status/780494805192454144
-        filename:
-          type: string
-          description: Filename of the archived source on disk.
-          example: 780494805192454144.txt
-        created_at:
-          type: string
-          format: date-time
-          description: The date and time the source was created.
-          example: '2017-02-15T16:13:32.456Z'
-        updated_at:
-          type: string
-          format: date-time
-          description: The date and time the source was last updated.
-          example: '2017-02-15T16:13:32.456Z'
-        _links:
-          type: object
-          description: HAL hypermedia links related to the source.
-          additionalProperties: true
     Quote:
       type: object
       description: A single Donald Trump quote with HAL hypermedia metadata.
@@ -368,18 +313,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Source'
-    Error:
-      type: object
-      description: Standard error response envelope.
-      properties:
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
-        message:
-          type: string
-          description: Human-readable error message.
-          example: Quote not found
     QuoteSearchResponse:
       type: object
       description: HAL response wrapper for paginated quote search and tag results.
@@ -403,6 +336,73 @@ components:
           type: object
           description: HAL pagination links (self, next, prev).
           additionalProperties: true
+    Source:
+      type: object
+      description: A source document (tweet, transcript, article) underpinning a quote.
+      properties:
+        source_id:
+          type: string
+          description: Unique URL-safe identifier for the source.
+          example: 2u3o8DcvSluqZ27WtmlGCw
+        url:
+          type: string
+          format: uri
+          description: Canonical URL of the source document.
+          example: https://twitter.com/realDonaldTrump/status/780494805192454144
+        filename:
+          type: string
+          description: Filename of the archived source on disk.
+          example: 780494805192454144.txt
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the source was created.
+          example: '2017-02-15T16:13:32.456Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the source was last updated.
+          example: '2017-02-15T16:13:32.456Z'
+        _links:
+          type: object
+          description: HAL hypermedia links related to the source.
+          additionalProperties: true
+    Author:
+      type: object
+      description: An author record (e.g. Donald Trump) attached to one or more quotes.
+      properties:
+        author_id:
+          type: string
+          description: Unique URL-safe identifier for the author.
+          example: 86xX9JdJSlqIo86xJoiqAA
+        name:
+          type: string
+          description: Display name of the author.
+          example: Donald Trump
+        slug:
+          type: string
+          description: URL-friendly slug for the author.
+          example: donald-trump
+        bio:
+          type: string
+          description: Short biography of the author.
+          example: 45th and 47th President of the United States.
+        _links:
+          type: object
+          description: HAL hypermedia links related to the author.
+          additionalProperties: true
+    Error:
+      type: object
+      description: Standard error response envelope.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        message:
+          type: string
+          description: Human-readable error message.
+          example: Quote not found
 externalDocs:
   description: Original Tronald Dump Documentation (historical)
   url: https://www.tronalddump.io/
