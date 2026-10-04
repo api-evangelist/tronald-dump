@@ -46,7 +46,6 @@ x-status-note: >-
   is reconstructed from the original HAL API contract and preserved community SDKs.
 tags:
   - Community
-  - Games And Comics
   - Open Source
   - Politics
   - Public APIs
@@ -54,7 +53,6 @@ tags:
   - Trump
 tags_raw:
   - Community
-  - Games And Comics
   - Open Source
   - Politics
   - Public APIs
@@ -178,3 +176,5 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-tags-removed:
+- Games And Comics
