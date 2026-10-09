@@ -60,6 +60,9 @@ artifacts:
   examples/tronald-dump-tag-list-response-example.json:
     method: unknown
     evidence: no authorship recorded
+  front-door-ai/2026-09-17.yml:
+    method: unknown
+    evidence: no authorship recorded
   json-ld/tronald-dump-context.jsonld:
     method: unknown
     evidence: no authorship recorded
